@@ -1,0 +1,21 @@
+$('#adminMemory').animate({
+    opacity: 0,
+    height: 'toggle'
+  }, 160, function() {
+    $("#adminMemory").after("<p class='info'>This user has been unbanned.</p>").hide();
+		$('p.info').slideDown("fast").show();
+});
+
+$(".memory").delay(6000).queue(function(){ 
+	$('p.info').fadeOut("fast").hide();
+	$('#adminMemory').html('<%= escape_javascript(render :partial => "memories/admin_memory") %>').hide();
+	$('#adminMemory').animate({
+	    opacity: 1,
+	    height: 'toggle'
+	  }, 300, function() {
+
+	});
+	$('p.info').remove();
+	$(this).dequeue(); 
+	
+});

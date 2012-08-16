@@ -1,0 +1,34 @@
+$('.showdownCountDown').removeClass('blinking');
+
+$('#showdownVote').animate({
+      // width: "0px",
+      opacity: "0",
+}, 100);
+<% if @showdowns.length == 0 %>
+	$('#showdownVote').addClass("empty_results", 1000);
+	$('#showdownVote').html('<%= escape_javascript(render :partial => "shared/empty_showdown") %>');
+<% else %>
+	<% if !@previous_showdown.nil? %>
+		$('#previous_showdown').html('<%= escape_javascript(link_to image_tag("votingBackButton.png"), "/voting/next_vote?showdown=#{@previous_showdown}", :remote => true) %>');
+	<% else %>
+		$('#previous_showdown').html('<%= escape_javascript(link_to image_tag("votingBackButton.png"), "/voting/next_vote?showdown=#{@showdowns.total_count}", :remote => true) %>');
+	<% end %>
+
+	$('#voting_showdown').html('<%= escape_javascript(render :partial => "showdowns/voting_showdown", :collection => @showdowns, :as => :showdown) %>');
+	$('#skip_showdown').html('<%= escape_javascript(link_to_next_page @showdowns, image_tag("votingNextButton.png"), :remote => true, :params => {:controller => 'showdowns', :action => 'next_vote'}, :param_name => :showdown) %>');
+	<% if @showdowns.last_page? %>
+		$('#skip_showdown').html('<%= escape_javascript(link_to image_tag("votingNextButton.png"), "/voting/next_vote?showdown=1", :remote => true) %>');
+	<% end %>
+	$('#showdownVote').removeClass("results", 300);
+<% end %>
+$('#showdownVote').animate({
+      // width: "730px",
+      opacity: "1",
+}, 600);
+$('img.showdownPreview').each(function(){
+	this.src = this.src}).load(function(){
+		processImage($(this), 140, 140);
+});
+
+clearInterval(counter)
+counter = setInterval('countdown()',1000);

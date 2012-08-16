@@ -1,0 +1,16 @@
+#signInUpBox
+  #xGoBack= link_to "X", root_path, :id => "Cancel"
+  #DYRlogo
+    = image_tag "doYouRememberSmallLogo.png", :title => "Do Your Remember?"
+  .loginUsingSocialNetworks
+    = link_to image_tag("facebook_login_bar.png", :title => "Login Using Your Facebook Account"), '/auth/facebook', :class => "social"
+    = link_to image_tag("twitter_login_bar.png", :title => "Login Using Your Twitter Account"), '/auth/twitter', :class => "social"
+    
+  #loginManually
+    .info Forgot your password?
+    = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f|
+      = devise_error_messages!
+      
+      .field
+        = f.email_field :email, :placeholder => "Write your email here."
+        %p.buttons= f.submit "Reset Password"

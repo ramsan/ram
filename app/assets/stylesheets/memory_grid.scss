@@ -1,0 +1,120 @@
+.memories_list{
+	margin: auto;
+  .memory_box {
+    float: left;
+    margin: 2px;
+    border:1px solid #ccc;
+    .memory_bigger{
+      display: none;
+      position: absolute;
+      top: -40px;
+      left: -56px;
+      z-index: 100;
+    }
+    &:hover{
+      .memory_bigger{
+        display: block;
+      }
+    }
+    .img{
+      img.preview{
+        width: 60px;
+      }
+    }
+  }
+
+  .memory_bigger{
+    border: 1px solid #ccc;
+
+    background: white;
+    width: 170px;
+    font-size: .8em;
+    line-height: 1em;
+    text-align: center;
+    padding-bottom: 9px;
+    box-shadow: 3px 3px 5px #666;
+    a.memory_link{
+      color: #666;
+      // &.preview_name_short{
+      //   font-size: .7em;
+      //   display: inline-block;
+      //   text-align: left;
+      // }
+    }
+    .img_big{
+      border: 1px solid #ccc;
+      margin: 8px;
+      width: 152px;
+      max-height: 148px;
+      overflow: hidden;
+      img.preview_bigger{
+        width: 100%;
+      }
+    }
+  }
+
+  #memory_list_header, .memory_list_item{
+    font-size: .8em;
+    width: 98%;
+    min-height: 60px;
+    img{
+      vertical-align: top;
+    }
+    .preview, .memory_name, .memory_tag, .memory_user, .follow_memory_user, .memory_comments, .memory_created_at {
+      display: inline-block;
+      width: 15%;
+      margin: 0px;
+      height: 100%;
+    }
+    .follow_memory_user, .memory_comments{
+      width: 12%;
+    }
+    .preview{
+      height: auto;
+      width: 60px;
+    }
+    &.grey{
+      background-color: #eee;
+    }
+  }
+
+  #memory_list_header{
+    margin: 0 auto 0 1em;
+    width: 96%;
+    font-weight: bold;
+    min-height: 2em;
+  }
+}
+
+#new_memory_lightbox, .memory_full_lightbox {
+  font-size: 1em;
+  line-height: 1.4;
+  display: none;
+  position: fixed;
+  overflow: scroll;
+  top: 0px;
+  left: 0px;
+  z-index: 1000;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0,.5);
+  #memory_full, #new_memory_container{
+    margin: 50px auto;
+    width: 502px;
+    height: 100%;
+  }
+  a.close{
+    font-size: 16px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin: 32px 230px;
+    z-index: 2000;
+    display: block;
+    color: white;
+    background-color: orange;
+    border-radius: 32px;
+    cursor: pointer;
+    padding: 8px 14px;
+  }
+}

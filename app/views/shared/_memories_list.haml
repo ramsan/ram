@@ -1,0 +1,18 @@
+-@view = :mosaic
+
+.memories_list.latest
+  -if @view == :mosaic
+    .memories_list.latest= render :partial => "memories/preview_small", :collection => @memories, :as => :m 
+  -elsif @view == :polaroid
+    .memories_list.latest= render :partial => "memories/preview", :collection => @memories, :as => :m 
+  -elsif @view == :list
+    #memory_list_header
+      .preview &nbsp; 
+      .memory_name Name
+      .memory_tag Categories
+      .memory_user Shared by
+      .follow_memory_user &nbsp;
+      .memory_comments Comments
+      .memory_created_at Created at
+    .memories_list.latest= render :partial => "memories/preview_list", :collection => @memories, :as => :m 
+= paginate @memories

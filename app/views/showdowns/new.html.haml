@@ -1,0 +1,12 @@
+- content_for :head do
+  %script{:src => "http://www.google.com/jsapi?key="}
+  = javascript_include_tag 'charCount', 'showdown.google_picker', "showdowns"
+
+%h1 New showdown
+.links
+  = link_to 'Go Back', showdowns_path
+  
+.newShowdown
+  = render 'form'
+
+=# link_to 'Back', showdowns_path

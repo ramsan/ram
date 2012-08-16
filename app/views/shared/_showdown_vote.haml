@@ -1,0 +1,21 @@
+#showdownVote{:class => "#{'empty_results' if @showdowns.empty?}"}
+  - if @showdowns.empty?
+    = render :partial => "shared/empty_showdown"
+  - else
+    #previous_showdown
+      - if !@previous_showdown.nil?
+        = link_to image_tag("votingBackButton.png"), "/voting/next_vote?showdown=#{@previous_showdown}", :remote => true
+      - else
+        = link_to image_tag("votingBackButton.png"), "/voting/next_vote?showdown=#{@showdowns.total_count}", :remote => true
+
+    -# %li= current_user.id
+    #voting_showdown
+      = render :partial => "showdowns/voting_showdown", :collection => @showdowns, :as => :showdown
+      =# render :partial => "showdowns/showdown_vote_results", :collection => @showdowns, :as => :showdown
+      =# link_to "Skip", '/voting/next_vote'#, :remote => true
+
+
+    =# link_to_next_page @showdowns, 'Next Page', :param_name => :showdown
+
+    #skip_showdown
+      = link_to_next_page @showdowns, image_tag("votingNextButton.png"), :remote => true, :params => {:controller => 'showdowns', :action => 'next_vote'}, :param_name => :showdown

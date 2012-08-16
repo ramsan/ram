@@ -1,0 +1,223 @@
+body {
+	background-color:#fff;
+	font-family: 'Helvetica', 'sans-serif', Arial;
+	a, a:visited, a:active, a:hover {
+		color: #333;
+		text-decoration:none;
+	}
+	#container {
+		display:table;
+		width:950px;
+		background-color:#ccc;
+		margin:30px auto 0px auto;
+		nav {
+			width:160px;
+			float:left;
+			padding: 10px 0px 10px 20px;
+			font-size:14px;
+			list-style:none;
+			&ul {
+				&li {
+					list-style:none;
+					width:100%;
+					padding-left:5px;
+					&a {
+						font-size:14px;
+						font-weight:900;
+						line-height:25px;
+					}
+				}
+				&li.span {
+					background-color:#FFF;
+				}
+			}
+		}
+		article {
+			margin-top:10px;
+			width:740px;
+			float:left;
+			padding-left:20px;
+			margin-right:10px;
+			overflow:hidden;
+			#loginBox {
+				vertical-align:top;
+				width:365px;
+				height:264px;
+				background-color:#FFF;
+				float:right;
+				#welcomeMessage {
+					width: 300px;
+					margin: 10px auto 0 auto;
+					text-align:center;
+					h1 {
+						margin-top:0px;
+						font-size: 18px;
+						color: #333;
+						line-height:14px;
+						font-weight:900;
+						margin-bottom:0px;
+					}
+					h2 {
+						font-size: 16px;
+						color: #333;
+						line-height:12px;
+						font-weight:500;
+						margin-top:8px;
+					}
+				}
+				#loginOptions {
+					width:174px;
+					margin:0px auto 5px auto;
+					display:hidden;
+					font-size:12px;
+					text-align:center;
+					.loginOption {
+						float:left;
+						margin:2px auto;
+					}
+					a {
+						font-size:12px;
+						font-weight:700;
+						text-decoration:underline;
+					}
+				}
+				#orMoreOptions {
+					clear: both;
+					margin: 0px auto 0px auto;
+					width:342px;
+					background-image: image-url('orBG.png');
+					background-repeat:no-repeat;
+					background-position:0 5px;
+					text-align:center;
+					vertical-align:top;
+				}
+				#bithYearOption {
+					width:100%;
+					text-align:center;
+					font-size:12px;
+					padding:0px;
+					margin:0px auto;
+					form#birthYear {
+						label, input[type="number"], input[type="text"] {
+							margin-top:5px;
+							font-size:25.97px;
+							font-weight:900;
+							color: #666;
+							margin-right:-5px;
+						}
+						input[type="number"], input[type="text"] {
+							width:21px;
+							height:34px;
+							background:transparent image-url('birthYearBG.png') left top no-repeat;
+							border: none;
+							text-align:center;
+						}
+						input[type="submit"] {
+							display:block;
+							width:60px;
+							margin:3px auto;
+							border: 0px;
+							background-color:#FFF;
+							font-size:12px;
+							color:#333;
+						}
+						input::-webkit-outer-spin-button,
+						input::-webkit-inner-spin-button {
+						    /* display: none; <- Crashes Chrome on hover */
+						    -webkit-appearance: none;
+						    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+						}
+						input::-webkit-input-placeholder, input:-moz-placeholder {
+						   font-size: 22px;
+							font-weight:500;
+						}
+					}
+					#skipBirthYear {
+						float:right;
+						padding-right:18px;
+						margin-top:-10px;
+						font-size:11px;
+					}
+				}
+			}
+			#latestMemories {
+				/*-----------------------------------------------------------------------------------------------*/
+				/*                                            TOOLTIP                                            */
+				/*-----------------------------------------------------------------------------------------------*/
+
+				.toolTip { /* This is the hook that the jQuery script will use */
+					padding-right: 0px; /* This is need to make sure that the help icon is always visible */
+					color: #3366FF;
+//					cursor: help; 
+					position: relative; /* This contains the .toolTipWrapper div that is absolutely positioned  */
+				}
+				.toolTipWrapper { /* The wrapper holds its insides together */
+					position: absolute; /* Absolute will make the tooltip float above other content in the page */
+					top: 50%;
+					margin-top:-30px;
+					width: 192px;
+					display: block; /* It has to be displayed none so that the jQuery fadein and fadeout functions will work */
+					color: #FFF;
+					font-weight: bold;
+					z-index:5;
+					.toolTipContent { /* Top section of the tooltip */
+						width: 192px;
+						margin: 5px auto;
+						height: 41px;
+						background-image: image-url('tooltipBG.png');
+						background-repeat: no-repeat;
+						color: #333;
+						&p {
+							width:140px;
+							height:25px;
+							padding: 5px 15px 5px 38px;
+							font-size: 14px;
+							line-height:14px;
+							overflow:hidden;
+						}
+					}
+				}
+				
+				.memory {
+					width:113px;
+					height:124px;
+					border: 1px #666 solid;
+					float:left;
+					margin-right:10px;
+					margin-bottom:12px;
+					&.beforeLast {
+						.toolTipWrapper { /* The wrapper holds its insides together */
+							margin-left:-260px;
+							.toolTipContent { /* Top section of the tooltip */
+								background-image: image-url('tooltipBGI.png');
+								&p {
+									padding: 5px 38px 5px 15px;
+								}
+							}
+						}
+					}
+					&.last {
+						margin-right:0px;
+						.toolTipWrapper { /* The wrapper holds its insides together */
+							margin-left:-260px;
+							.toolTipContent { /* Top section of the tooltip */
+								background-image: image-url('tooltipBGI.png');
+								&p {
+									padding: 5px 38px 5px 15px;
+								}
+							}
+						}
+					}
+					&img {
+						height:100%;
+		      	width:100%;
+					}
+				}
+			}
+		}
+	}
+	#spacer {
+		float: left;
+		width:100%;
+	}
+}

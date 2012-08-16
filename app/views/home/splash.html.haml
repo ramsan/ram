@@ -1,0 +1,90 @@
+!!! 5
+
+/[if lt IE 7] <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en">
+/[if IE 7] <html class="no-js lt-ie9 lt-ie8" lang="en">
+/[if IE 8] <html class="no-js lt-ie9" lang="en">
+/ [if gt IE 8]<!
+%html.no-js{:lang => "en"}
+  / <![endif]
+  %head
+    %meta{:charset => "utf-8"}
+    %meta{:content => "IE=edge,chrome=1", "http-equiv" => "X-UA-Compatible"}
+    %title DoYouRemember?
+    %meta{:content => "", :name => "description"}
+    %meta{:content => "height=device-height, width=device-width, initial-scale=0.85, maximum-scale=1.5", :name => "viewport"}
+    -# %link{:href => "css/style.css", :rel => "stylesheet"}
+    -# %link{:href => "css/splashbg.css", :rel => "stylesheet"}
+    -# %link{:href => "css/splash.css", :rel => "stylesheet"}
+    = stylesheet_link_tag "style", "splash"
+    %script{:src => "js/libs/modernizr-2.5.3.min.js"}
+    = csrf_meta_tags
+  %body
+    /[if lt IE 7] <p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p>
+    -# params[:alert] = "Hello World"
+    #meta_container
+      #container
+        #header
+          = image_tag "doYouRememberSmallLogo.png", :title => "Do You Remember"
+          %p Yesterday, back by popular demand.
+        #description
+          %h2 
+            - if params[:notice]
+              Thank You!
+            - else
+              The new way to share old memories.
+          %p 
+            - if params[:notice]
+              Thank you for visiting DoYouRemember.com. 
+              %br/
+              An invitation will be sent to you shortly.
+            - else
+              If you want to join the crowd and participate in our beta test, please enter your email below. We'll be sending out invites in waves.
+        #sign_up_form
+          = form_for @visit do |f|
+            - if @visit.errors.any?
+              #error_explanation
+                %h2= "#{pluralize(@visit.errors.count, "error")} prohibited register from being saved:"
+                %ul
+                  - @visit.errors.full_messages.each do |msg|
+                    %li= msg
+            = f.hidden_field :ip, :value => request.remote_ip
+            = f.email_field :email, :id => :email, :placeholder => "Email"
+            = f.submit "Sign Me Up!", :class => "dYr invite"
+          
+          - if params[:code]
+            .alert
+              Sorry, the code you entered is incorrect. Please try again or request another invite.
+          - elsif params[:alert]
+            .alert
+              = params[:alert]
+          
+          - unless params[:notice]
+            %br/
+            %h2 Or enter your invite code to access the site:
+            = form_tag do
+              =# label_tag :Or_enter_your_code
+              = text_field_tag :code, nil, :placeholder => "Password"
+              = submit_tag "Send", :class => "dYr invite"
+        #contacts
+          Find us on 
+          = link_to "Facebook ", "http://www.facebook.com/DoYouRememberOnline", :target => "blank"
+          \&amp; 
+          = link_to "Twitter", "http://twitter.com/doyouremember", :target => "blank"
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          = mail_to "info@doyouremember.com", "info@DoYouRemember.com", :encode => "hex"
+          
+    %h1 Coney Island Beach,  NYC  Circa 1938 
+  
+  
+    = javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js', "jquery.placeholder"
+    = javascript_include_tag "/js/splash.js"
+    - if Rails.env.eql?('production')
+      :javascript
+        window.jQuery || document.write('<\/script>')
+        var _gaq=[['_setAccount','UA-31381947-1'],['_trackPageview']];
+        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));

@@ -1,0 +1,25 @@
+.categoryContainer
+  .adminCategories
+    %h1 Categories:
+    .spacer
+    .links
+      = link_to "Create New Category", new_category_path
+      %br/
+    .spacer
+    - @categories.each do |category|
+      .categoryListing
+        .image
+          = image_tag category.header.url(:thumb) if category.header?
+        .info
+          %b= category.name
+          %br/
+          %i
+            Memories on this category
+            (
+            = category.memories.size
+            )
+        .links
+          = link_to 'Edit', edit_category_path(category)
+          - if category.memories.empty?
+            = link_to 'Delete', category, :confirm => 'Are you sure?', :method => :delete
+  = paginate @categories

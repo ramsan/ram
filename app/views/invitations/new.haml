@@ -1,0 +1,12 @@
+- content_for :head do
+  = javascript_include_tag "facebook_invitation"
+  
+.content_divs
+  .content_div
+    .empty
+      %h3.title Invite Facebook friends
+      .facebook_friends_cont
+        %a#fb_all{:href => '#'} Check all         
+        = form_tag invitations_path, :id => 'fb_friends_form' do          
+          = render :partial => 'fb_friend', :collection => @fb_friends
+          = submit_tag 'Invite Friends', :id => "submit_facebook"

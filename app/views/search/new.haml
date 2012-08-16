@@ -1,0 +1,18 @@
+%h2 Search
+
+= form_tag search_result_path do
+  = label_tag 'search[term]', 'Term(s)'
+  %br
+  = text_field_tag 'search[term]', '', :class => 'validate_five_txt'
+  %br
+  %br
+  Categories
+  - Category.all.sort.each do |obj|
+    .category
+      = check_box_tag 'search[category_ids][]', obj.id
+      = label_tag 'checkbox-'+obj.id.to_s, obj.name  
+  %br
+  %br
+  = submit_tag 'Search', :id => 'validate_five_btn'
+  %br
+  %br

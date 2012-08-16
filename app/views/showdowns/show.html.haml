@@ -1,0 +1,10 @@
+- content_for :head do
+  = javascript_include_tag "showdown"
+
+%h1 Showdown Preview
+.links
+  = link_to 'Edit', edit_showdown_path(@showdown)
+  \|
+  = link_to 'Showdown listing', showdowns_path
+
+= render :partial => 'listing_showdown', :locals => {:showdown => @showdown}

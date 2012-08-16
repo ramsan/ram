@@ -1,0 +1,21 @@
+$('#adminMemory').animate({
+    opacity: 0,
+    height: 'toggle'
+  }, 160, function() {
+    $("#adminMemory").after("<p class='info'>This memory has been suspended. Nobody is able to see it but Admins.</p>").hide();
+		$('p.info').slideDown("fast").show();
+});
+
+$(".memory").delay(6000).queue(function(){ 
+	$('#adminMemory').html('<%= escape_javascript(render :partial => "memories/admin_memory") %>').hide();
+  $('p.info').fadeOut("fast").hide();
+	$('#adminMemory').animate({
+	    opacity: 1,
+	    height: 'toggle'
+	  }, 300, function() {
+
+	});
+	$('p.info').remove();
+	$(this).dequeue(); 
+});
+

@@ -1,0 +1,73 @@
+#whoToFollow {
+  width:848px;
+  margin:0 auto;
+  tr, th, td {
+    margin: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    color: #666666;
+    padding:5px;
+    font: normal 12px Arial, Helvetica, sans-serif;
+  }
+  
+  input[id="search_btn"] {
+    background: white image-url('search.png') no-repeat center center;
+    background-size: 18px 18px;
+    height: 26px !important; 
+    
+  }
+  .line_bottom {
+    border-bottom: 1px solid #EBEBEB; }
+
+  .line_left_right {
+    border-left: 1px solid #EBEBEB;
+    border-right: 1px solid #EBEBEB; }
+  input[type="text"] {
+    display: inline;
+    padding-left: 10px;
+    width: 200px;
+    height: 22px;
+    border-radius: 5px 0 0 5px;
+    -moz-border-radius: 5px 0 0 5px;
+    -webkit-border-radius: 5px 0 0 5px;
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 1px rgba(150, 150, 150, 0.5) inset, 1px 1px 0 rgba(0, 0, 0, 0.5) inset;
+    float: left;
+    border-right: 0px solid #ccc;
+    font-size: 13.11px;
+    font-color: blue; 
+  }
+  input[type="submit"] {
+    display: inline;
+    width: 46px;
+    height: 26px;
+    border-radius: 0 5px 5px 0;
+    -moz-border-radius: 0 5px 5px 0;
+    -webkit-border-radius: 0 5px 5px 0;
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 1px rgba(150, 150, 150, 0.5) inset, 1px 1px 0 rgba(0, 0, 0, 0.5) inset;
+    float: left;
+    border-left: none;
+    margin-right: -10px; 
+  }  
+  .list {
+    td {
+      vertical-align:middle;
+    }
+    td {
+      a{
+        color:#666666;
+      }
+      .img {
+        margin-top:10px;
+      }
+    }
+    .profile_following{
+      min-height:23px;
+    }
+    .col1{
+      height:23px;
+    }
+  }
+}

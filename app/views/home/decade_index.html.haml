@@ -1,0 +1,86 @@
+= content_for :head do
+  =# stylesheet_link_tag "lightbox"
+  = javascript_include_tag "jquery.sausage", "home" #,"lightbox"
+  
+    
+.home_content
+  =render "shared/decade_selector"
+
+  =render "shared/category_selector"
+  -# if params[:controller] == "memories" && params[:action] == "per_category"
+    - if @category.header? == true
+      .categoryHeader
+        = image_tag @category.header.url
+
+  -# if params[:controller] == "memories" && params[:action] == "per_decade"
+    .categoryHeader
+      - if params[:decade_id] == "1"
+        = image_tag "decades/1940s.png", :title => "1940's"
+      - elsif params[:decade_id] == "2"
+        = image_tag "decades/1940s.png", :title => "1940's"
+      - elsif params[:decade_id] == "3"
+        = image_tag "decades/1950s.png", :title => "1950's"
+      - elsif params[:decade_id] == "4"
+        = image_tag "decades/1960s.png", :title => "1960's"
+      - elsif params[:decade_id] == "5"
+        = image_tag "decades/1970s.png", :title => "1970's"
+      - elsif params[:decade_id] == "6"
+        = image_tag "decades/1980s.png", :title => "1980's"
+      - elsif params[:decade_id] == "7"
+        = image_tag "decades/1990s.png", :title => "1990's"
+      - elsif params[:decade_id] == "8"
+        = image_tag "decades/2000s.png", :title => "2000's"
+      - elsif params[:decade_id] == "9"
+        = image_tag "decades/2000s.png", :title => "2010's"
+  
+  -# if user_signed_in? == true
+    .betaFeedback.shrinked= mail_to "info@doyouremember.com", "We are in beta and appreciate feedback. <b>Click here</b> to send us suggestions, fixes, improvements or just to say hi. Thank you for visiting.".html_safe, :subject => "Feedback for doyouremember.com"
+  -# else  
+    .betaFeedback= mail_to "info@doyouremember.com", "We are in beta and appreciate feedback. <b>Click here</b> to send us suggestions, fixes, improvements or just to say hi. Thank you for visiting.".html_safe, :subject => "Feedback for doyouremember.com"
+  -# if params[:controller]  == "home" && params[:action] == "index"
+    - if user_signed_in? == false
+      - if params[:action] != "login_register"
+        = render "shared/not_logged_in"
+  /-
+  /-
+  /- if !current_user
+  /  = form_tag memories_per_similar_demographics_path do
+  /    Born in:
+  /    = select_tag :birth_year, options_for_select(((Date.today.year - 70)..Date.today.year).to_a, :selected => (Date.today.year - 55))
+  /    &nbsp;
+  /    Gender:
+  /    = select_tag :gender, options_for_select(%w(male female)), :include_blank => true
+  /    = submit_tag 'Show similar memories', :disabled => true, :id => 'similar_submit' 
+  / .spacer
+  /   %br/
+  .content_box
+    -#%h1=  request.headers.to_xml
+    - if !@special_title.nil?
+      .special_title
+        %h1= dyr_title(@special_title)
+    .spacer
+    - if params[:action] == "index"
+      /= render "shared/livefeed"
+      /= render "shared/showdown_vote"
+      .spacer
+      %br/
+    -#.top_menus
+      = render :partial => 'shared/order_by_and_categories'
+    - if @slider_memories != nil
+      = render "shared/slider"
+    .spacer
+    #memories_list
+      
+      .memories_list.latest
+        
+        = render :partial => "memories/preview_small", :collection => @decade, :as => :m 
+        .spacer
+      = paginate @decade
+
+
+    /.view_all
+    /  = link_to 'View All', memories_path
+    /  - if can_use_demographics?
+    /    = link_to 'You might like . . .', memories_per_similar_demographics_path
+  .spacer
+  =# render :partial => 'birth_year_lightbox'

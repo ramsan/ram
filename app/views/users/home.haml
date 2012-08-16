@@ -1,0 +1,170 @@
+= content_for :head do
+  %script{:src => "http://www.google.com/jsapi?key="}
+  %script{:type => "text/javascript"}
+    var switchTo5x=true;
+  %script{:type => "text/javascript", :src => "http://w.sharethis.com/button/buttons.js"}
+  = javascript_include_tag "jquery.autogrowtextarea.js", "jquery.numeric", "entrance"
+  %script{:type => "text/javascript"}
+    stLight.options({publisher: "ur-1dc63ca3-3710-5df8-3253-e946e605d667"});
+  = javascript_include_tag 'user/home'
+  :javascript
+    function updatePreference(this_type, node){
+      var current_state = node.attr('class').split('_')[1];
+      var new_state = (current_state == 'on' ? 'off' : 'on');
+      $.get('/users/set_'+this_type+'/'+ node.attr('data-'+this_type+'-type') + '/' + current_state, function(data){
+        node.text('Turn ' + new_state);
+        node.removeClass('btn_' + current_state);
+        node.addClass('btn_' + new_state);
+      });
+    }
+    
+    $(document).ready(function(){
+      $('.menu_left a').click(function(e){
+        e.preventDefault();
+        $('.menu_left a').removeClass('current');
+        $(this).addClass('current');
+        $('.content_divs').children('.content_div').hide();
+        var content_div_id = $(this).attr('id').split('_')[1];
+        $('#'+content_div_id).show();
+        $('.memories_list').masonry( 'reload' );
+      });
+      
+      $('a[data-notification-type]').click(function(e){
+        e.preventDefault();
+        updatePreference('notification', $(this));
+      });
+      
+      $('a[data-preference-type]').click(function(e){
+        e.preventDefault();
+        updatePreference('preference', $(this));
+      });
+      
+      $('a[data-comment-type]').click(function(e){
+        e.preventDefault();
+        updatePreference('comment', $(this));
+      });
+
+      if(window.location.hash != '') $('a#nav_'+window.location.hash.substr(1)).click();
+    });
+    function destroycomment(id){
+       $('#'+id).hide("slow");
+    }
+.user
+  .top_menus
+    .menu_left
+      %a{:id => 'nav_memories', :href => '#', :class => 'current grey', :title => 'Memories you have submitted'} My memories
+      %a{:id => 'nav_following', :href => '#', :class => 'grey'} Following
+      %a{:id => 'nav_followers', :href => '#', :class => 'grey'} Followers
+      %a{:id => 'nav_comments', :href => '#', :class => 'grey'} My comments
+      %a{:id => 'nav_also', :href => '#', :class => 'grey', :title => 'Memories you remember'} I remember  
+      %a{:id => 'nav_settings', :href => '#', :class => 'grey'} My settings
+    
+  .content_divs
+    .content_div#memories
+      - if @memories.count > 0
+        .content_box
+          .memories_list
+            = render :partial => 'memories/preview', :collection => @memories, :as => :m
+            .spacer
+            = paginate @memories
+      - else
+        .no_memories
+          You have no memories. 
+          %br
+          %br
+          Enter a memory in the box above to search and / or create a memory!
+    .content_div#following{:style => 'display:none'}
+      - following = current_user.followees
+      - if following.count > 0
+        = render :partial => 'following', :collection => following
+      - else
+        You are not following anyone    
+    .content_div#followers{:style => 'display:none'}
+      - followers = current_user.followers
+      - if followers.count > 0
+        = render :partial => 'followers', :collection => followers
+      - else
+        You are not being followed by anyone
+    .content_div#comments{:style => 'display:none'}
+      - comments = current_user.comments
+      - if comments.count > 0
+        = render :partial => 'my_comment', :collection => comments, :as => :img
+      - else
+        You have not made any comments      
+    - also_remembers = current_user.also_remembers.latest.except(:limit)
+    .content_div#also{:style => 'display:none', :class => "#{also_remembers.count.eql?(0) ? 'empty' : nil }"}
+      - if also_remembers.count > 0 && also_remembers.first.images.first.has_image? 
+        .content_box
+          .memories_list
+            = render :partial => 'memories/preview', :collection => also_remembers, :as => :m
+            .spacer
+      - else
+        You have not indicated other memories that you also remember or the memories you are remembering currently are without images.
+    .content_div#settings{:style => 'display:none'}
+      .empty
+        .title.edit.light_yellow
+          %span.title Email notifications
+        .cont
+          %ul
+            %li
+              %span.t
+                Comments
+              = notification_link(User::NOTIFY_MEMORY_COMMENT)
+              %span.n
+                When someone comments on your memories
+            %li
+              %span.t
+                Followed
+              = notification_link(User::NOTIFY_FOLLOWED_BY_USER)
+              %span.n
+                When someone follows you
+            %li
+              %span.t
+                Added
+              = notification_link(User::NOTIFY_MEMORY_ADDED_BY_FOLLOWEE)
+              %span.n
+                Memory added by user you are following
+            -#%li
+              %span.t
+                Commented
+              = notification_link(User::NOTIFY_COMMENT_MADE_BY_FOLLOWEE)
+              %span.n
+                Comment made by user you are following
+                
+        .title.edit.light_yellow
+          %span.title Facebook System preferences
+        .cont
+          %ul
+            %li
+              %span.t
+                Post Memories
+              = preference_link(User::SYSTEM_AUTO_FB_MEMORY_POST)
+              %span.n
+                Automatically post your memories to your Facebook wall
+          -# Auto Comments Posting to Facebook turned Off until fixing the status of the property correctly on the buttom 
+            %ul      
+              %li
+                %span.t
+                  Post Comments
+                = comment_link(User::SYSTEM_AUTO_FB_COMMENT_POST)
+                %span.n
+                  Automatically post your comments to your Facebook wall
+        .title.edit.light_yellow
+          %span.title Edit My Profile
+        .cont
+          %ul
+            %li
+              %span.t
+                Edit Profile
+              = link_to "Edit My Profile", edit_user_registration_path(current_user), :class => "btn_off"
+              %span.n
+                Update your personal info, picture or password
+        .title.edit.light_yellow
+          %span.title Auth services
+        .cont
+          = render :partial => 'services/current'
+        
+  -#.bottom_menus
+    = link_to 'View latest', '/?show_latest=true', :class => "yellow"
+    = link_to 'Most popular', '/', :class => "yellow"
+    = link_to 'You might like . . .', memories_per_similar_demographics_path, :class => "yellow"

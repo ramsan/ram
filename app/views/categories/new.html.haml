@@ -1,0 +1,10 @@
+- content_for :head do
+  = javascript_include_tag "showdown"
+
+.adminCategories
+  %h1 New category
+  
+.links
+  = link_to 'Go Back', categories_path
+.newShowdown
+  = render 'form'

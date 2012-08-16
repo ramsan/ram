@@ -1,0 +1,473 @@
+- content_for :title do
+  = @memory.name
+- content_for :head do
+  %script{:src => "http://www.google.com/jsapi?key="}
+  %script{:type => "text/javascript"}
+    var switchTo5x=true;
+  %script{:type => "text/javascript", :src => "http://w.sharethis.com/button/buttons.js"}
+  = javascript_include_tag "jquery.autogrowtextarea.js", "jquery.numeric", "entrance"
+  %script{:type => "text/javascript"}
+    stLight.options({publisher: "ur-1dc63ca3-3710-5df8-3253-e946e605d667"});
+  = javascript_include_tag 'memories/show'
+  %meta{:property => "og:site_name", :content => CONFIG[:app_name]}
+  %meta{:name => "keywords", :content => CONFIG[:keywords] + @memory.name}
+  %meta{:name => "description", :content => @memory.description}
+  %meta{:property => "og:title", :content => "Do you remember '"+@memory.name+"'?"}
+  %meta{:property => "og:type", :content => "#{CONFIG[:fb_app_name_space]}:memory"}
+  %meta{:property => "og:description", :content => @memory.description}
+  -# %meta{:property => "og:user_remembered_count", :content => "#{pluralize(@memory.remembered_by.count, "Remember")} this memory"}
+  %meta{:property => "og:start_time", :content => 22.years.ago.iso8601}
+  %meta{:property => "og:url", :content => memory_url(@memory)}
+  - if @memory.user_images.count > 0
+    %link{:rel => "image_src", :href => "#{@memory.main_image.this_url(:large)}"}
+    %meta{:property => "og:image", :content => "#{@memory.main_image.this_url(:large)}"}
+  
+  :javascript
+    var memory_name_var = '#{@memory.name.gsub(/'/, "\\\\'")}';
+    var image_source_map = #{image_source_js_map(@memory)};
+
+    $(document).ready(function(){    
+      //resize main image
+      $('.user_row2 .memory-preview-image .img img.big_preview').each(function(){  
+        this.src = this.src}).load(function(){
+        processImage($(this), 220, null, 'block');
+      });
+  
+      //resize profile image 
+      $('.img_profile_memory img').each(function(){  
+        this.src = this.src}).load(function(){
+        processImage($(this), 42, 42);
+      }); 
+      
+      //resize additional images
+      $('.memory_additional img').each(function(){  
+        this.src = this.src}).load(function(){
+        processImage($(this), 65, 65);
+      }); 
+      
+      //resize image remembered
+      $('.img_memory_remembered img').each(function(){  
+        this.src = this.src}).load(function(){
+        processImage($(this), 40, 40);
+      });
+      
+      $('.rembered_memory a').click(function(e){
+        if(#{current_user && @memory.user.eql?(current_user) ? true : false}){
+          e.preventDefault();
+          alert('You cannot remember your own memory');
+        }
+      });
+      $("#navigationAdvice").first().hide().slideDown('400','easeInQuad').removeClass('hidden');
+      
+      $("#newUserComment").autoGrow();
+    });
+
+.memory
+  -if current_user  && current_user.try(:admin?)
+    #adminMemory
+      = render :partial => 'admin_memory'
+  - if !current_user
+    #login_message
+      We suggest you 
+      =link_to "sign in", new_user_session_path
+      to share, add, comment or vote on this memory.
+  #image_big_frame
+    - if @memory.user_images.count > 0
+      #slideshow_container
+        %ul#image_slideshow.bjqs
+          -@memory.user_images.each do |image|
+            %li.slideshow_image
+              #img_container
+                = image_tag image.this_url(:large)
+                #links
+                  -if image.google_page_url
+                    %a#show_original{:href => "#{image.google_page_url}"} See Original
+                  =link_to "Enlarge", image.this_url(:large)
+    #memory_title
+      %h2= @memory.name
+      - if @memory.decade
+        %h3
+          Remembered from the
+          =@memory.decade_name
+  #user_profile.clearfix
+    #user_image
+      = image_tag (@memory.is_anonymous ? 'default-user-icon.gif' : @memory.user.my_profile_image)
+    #user_name.clearfix
+      -if @memory.is_anonymous
+        Anonymous
+      - else
+        = link_to @memory.user.name, users_profile_path(@memory.user.id), :id => 'user_name_link'
+      %a#flag Flag this
+    #follow_user
+      - if current_user && current_user.followees.include?(@memory.user)
+        = link_to "Following: #{@memory.user.name}", users_unfollow_path(@memory.user), :title => 'Un-follow', :remote => true
+        = link_to 'x', users_unfollow_path(@memory.user), :title => 'Un-follow', :remote => true, :class => 'unfollow remove'
+      - else
+        = button_to 'Follow: ' + @memory.user.name, users_follow_path(:followee_id => @memory.user.id), :remote => true
+  #tags
+    / Decade/Year/Date
+    - if !@memory.categories.count.eql?(0)
+      - @memory.categories.each do |cat|
+        = link_to cat.name.titleize, memories_per_category_path(cat.id) 
+  #memory_description_block
+    %p#memory_description
+      = @memory.description
+    %a#more_description More
+  #remember_this_block
+    Do you remember this?
+    #remember_this_selector
+      %a#remember_yes.remember_button  Yes
+      %a#remember_maybe.remember_button So-So
+      %a#remember_no.remember_button No
+  -#remember_this_block
+    - if current_user && !current_user.eql?(@memory.user) && current_user.also_remembers.include?(@memory)
+      %a.iRememberedThis I remembered this
+      %a.remove_memory  Remove from my Memories
+    - else
+      %a.remember_button I remember this
+  #options_block.clearfix
+    %a#share_button.option_button{:href=>"#share"}
+      Share
+    %a#add_button.option_button{:href=>"#{new_memory_path}"}
+      Add
+    %a#comment_button.option_button{:href=>"#comment"}
+      Comment
+    %a#more_button.option_button{:href=>"#more"}
+      Shop
+  #share.option
+    %span.social.st_twitter_hcount{:displayText => 'Tweet'}
+    %span.social.st_facebook_hcount{:displayText => 'Facebook'}
+    %span.social.st_fblike_hcount{:displayText => 'Facebook Like'}
+    %span.social.st_plusone_hcount{:displayText => 'Google +1'}
+    %span.social.st_stumbleupon_hcount{:displayText => 'StumbleUpon'}
+    %span.social.st_pinterest_hcount{:displayText => 'Pinterest'}
+    %span.social.st_email_hcount{:displayText => 'Email'}
+  #add.option.clearfix
+    %a#add_associated
+      Link a new memory
+    %a#add_to_scrapbook
+      Add to your scrapbooks
+  #comment.option
+    %h2.Comments
+    = render :partial => 'user_comment', :collection => @memory.comments.order('created_at desc') || 'This memory has no comments'
+  #more.option
+    Coming Soon!
+  #new_comment
+    - if current_user.nil?
+      = link_to "Sign in ",  new_user_session_path
+      to add a comment 
+    -else #a registered user, but NOT the memory owner
+      = render "memory_details"
+
+  :javascript
+    $(function(){
+      $.activate_slider = $('#image_slideshow').anythingSlider({
+        buildStartStop: false,
+        resizeContents: false,
+        mode: "vertical"
+      });
+      $('.option_button').live('click',function(){
+        $('.option').hide();
+        $('.option_button').removeClass('open_tab');
+        $($(this).attr('href')).show();
+        $(this).addClass('open_tab');
+        if ( $(this).attr('href') === '#comment' ) {
+          $('#new_comment').css('visibility', 'visible');
+        } else {
+          $('#new_comment').css('visibility', 'hidden');
+        }
+      });
+
+      $.activate_slider();
+    });
+
+
+
+-#.memory
+  #adminMemory.admin
+    = render :partial => 'admin_memory'
+
+  .cont
+    - if @memory.user_images.count > 0
+      .content_box.long
+        .user_row2
+          .memory-preview-image
+            - if @created_now == true
+              #navigationAdvice.hidden
+                %h3 Thank you for posting your comment.
+                %h4 Would you like to:
+                = link_to_function "Find More Memories", "history.go(-2)"
+                %br/
+                = link_to "Go To Home Page", root_path, :id => "goToMemories"
+                %br/
+                %br/
+                .spacer
+            .img
+              - if @memory.user_images.count > 0
+                - if @memory.main_image.google_main.present?
+                  =# link_to image_tag(@memory.main_image.this_url(:medium)), @memory.main_image.this_url(:large), :rel => "shadowbox[media]; title=<a href='#{@memory.main_image.google_page_url}' target='_blank' style='color:red'>Source</a>", :class => "media"
+                  %a.media{:href => @memory.main_image.this_url(:large), :rel => "title=<a href='#{@memory.main_image.google_page_url}' target='_blank' style='color:red'>Source</a>"}
+                    %img.big_preview#memoryPreview{:src => @memory.main_image.this_url(:medium), :title => 'View larger', :alt => 'View larger'}
+                - else   
+                  %a.media{:href => @memory.main_image.this_url(:large)}
+                    %img.big_preview#memoryPreview{:src => @memory.main_image.this_url(:medium), :title => 'View larger', :alt => 'View larger'}
+            =# link_to "Enlarge", "#", :class => "media" 
+            /\| 
+            -#%span.st_sharethis{:displayText => 'Share'}
+   
+            =# link_to "Share", "#"
+            / %span.st_sharethis_small{:displayText => 'Share'}
+            / %span.social.st_email_hcount{:displayText => 'Email'}
+        
+          - if current_user 
+            = render "memory_details"
+          - else
+            = render "memory_details_as_guess"
+        .spacer
+        - if !@memory.comments.count.eql?(0)
+          .add_comment_row
+            .accordion_btn.open
+              %span#comment_count.title
+                Comments
+                \(
+                =  @memory.comments.count
+                \)
+              -#%img.ico{:src => "#{asset_path 'add_comment_icon.png'}", :border => 0}
+                %span.count_icon
+                  = @memory.comments.count
+
+            .accordeon_cont.comments_row{ :style => "display:block"}
+
+              %div.list_comments
+              #show_comments
+                = render :partial => 'user_comment', :collection => @memory.comments.order('created_at desc') || 'This memory has no comments'
+                .spacer
+        .spacer
+        - if !@memory.additional_images.count.eql?(0)
+          .memories_list_row
+            .accordion_btn.open
+              %span.title
+                Additional Photos
+                \(
+                = @memory.additional_images.count
+                \)
+              -#%img.ico{:src => "#{asset_path 'white_camera.png'}", :border => 0}
+              %span.count_icon
+                / = @memory.additional_images.count
+            
+            .accordeon_cont.memories_list_not_masonry{ :style => "display:block"}
+              - @memory.additional_images.each do |img|
+                - if img.google_page_url.present?
+                  %a.memory_link.media{:href => "#{img.this_url(:large)}", :rel => "title=<a href='#{img.google_page_url}' target='_blank' style='color:red'>Source</a>"}
+                    .memory_additional
+                      %img.preview_additional{:src => img.this_url(:small), :title => 'View larger', :alt => 'View larger'}
+                - else
+                  %a.memory_link.media{:href => "#{img.this_url(:large)}", :rel => "title=<a href='#{@memory.main_image.google_page_url}' target='_blank' style='color:red'>Source</a>"}
+                    .memory_additional
+                      %img.preview_additional{:src => img.this_url(:small), :title => 'View larger', :alt => 'View larger'}
+              .spacer
+        
+        -# if !@memory.description.blank?
+          .description_row
+            .accordion_btn.open
+              %span.title
+                Description
+            .accordeon_cont.memory_description{ :style => "display:block"}
+              = @memory.description 
+            
+
+        
+                
+        -# Update config.yml you_tube_video: values to change the dimensions of the iframes
+        - if @memory.user_videos.count > 0
+          .videos_row
+            .accordion_btn.open
+              %span.title
+                Videos
+                \(
+                = @memory.user_videos.count
+                \)
+              / %img.ico{:src => "#{asset_path 'add_comment_icon.png'}", :border => 0}
+              -# %span.count_icon
+                = @memory.user_videos.count
+              
+            .accordeon_cont.comments_row{ :style => "display:block"}
+              %div.list_videos
+                %ul
+                  - @memory.user_videos.each do |vid|
+                    %li
+                      %a{:href => "http://www.youtube.com/v/#{vid.video_id}&hl=en&fs=1&rel=0&autoplay=1", :rel => "shadowbox;width=405;height=340;player=swf"}
+                        = image_tag "http://img.youtube.com/vi/#{vid.video_id}/1.jpg", :title => "Watch video", :alt => "Watch video"
+        
+        
+        - remembered_by_count = @memory.remembered_by.count 
+        - if remembered_by_count > 0
+          .remembered_row
+            .accordion_btn.open
+              %span.title
+                Users Who Also Remember This
+              %img.ico{:src => "#{asset_path 'remembers_small_normal.png'}", :border => 0}
+              %span.count_icon
+                = remembered_by_count
+            .accordeon_cont.memory_remembered{ :style => "display:block"}
+              - @memory.remembered_by.each do |r|
+                .remembered
+                  %a.img{:href => "#{users_profile_path(r)}"}
+                    .img_memory_remembered
+                      = image_tag r.my_profile_image, :border => 0, :alt => r.name, :title => r.name
+                    
+              .spacer
+        
+      -#.share
+        %span.social.st_twitter_hcount{:displayText => 'Tweet'}
+        %span.social.st_facebook_hcount{:displayText => 'Facebook'}
+        %span.social.st_fblike_hcount{:displayText => 'Facebook Like'}
+        %span.social.st_plusone_hcount{:displayText => 'Google +1'}
+        %span.social.st_stumbleupon_hcount{:displayText => 'StumbleUpon'}
+        %span.social.st_pinterest_hcount{:displayText => 'Pinterest'}
+        %span.social.st_email_hcount{:displayText => 'Email'}
+        .spacer                                    
+    - else
+      .content_box.long
+        .user_row2
+          .memory-preview-image
+            = link_to_function "Back", "history.back()"
+            - if @created_now == true
+              #navigationAdvice.hidden
+                %h3 Thank you for posting your comment.
+                %h4 Would you like to:
+                = link_to "Find More Memories", nil, :id => "findMoreMemories"
+                %br/
+                = link_to "Go To Home Page", nil, :id => "goToMemories"
+                %br/
+                %br/
+                .spacer
+            .img
+              - if @memory.user_images.count > 0
+                - if @memory.main_image.google_main.present?
+                  =# link_to image_tag(@memory.main_image.this_url(:medium)), @memory.main_image.this_url(:large), :rel => "shadowbox[media]; title=<a href='#{@memory.main_image.google_page_url}' target='_blank' style='color:red'>Source</a>", :class => "media"
+                  %a.media{:href => @memory.main_image.this_url(:large), :rel => "title=<a href='#{@memory.main_image.google_page_url}' target='_blank' style='color:red'>Source</a>"}
+                    %img.big_preview#memoryPreview{:src => @memory.main_image.this_url(:medium), :title => 'View larger', :alt => 'View larger'}
+                - else   
+                  %a.media{:href => @memory.main_image.this_url(:large)}
+                    %img.big_preview#memoryPreview{:src => @memory.main_image.this_url(:medium), :title => 'View larger', :alt => 'View larger'}
+              - else
+                %h5 This memory has no images. Please click on edit this memory and add some images.
+                %br/
+                %br/
+            - if @memory.user_images.count > 0
+              = link_to "Enlarge", "#", :class => "media" 
+              \| 
+              %span.st_sharethis{:displayText => 'Share'}
+ 
+              =# link_to "Share", "#"
+              / %span.st_sharethis_small{:displayText => 'Share'}
+              / %span.social.st_email_hcount{:displayText => 'Email'}
+      
+          - if current_user 
+            = render "memory_details"
+          - else
+            = render "memory_details_as_guess"
+        .spacer
+        - if !@memory.comments.count.eql?(0)
+          .add_comment_row
+            .accordion_btn.open
+              %span.title
+                Comments
+                \(
+                =  @memory.comments.count
+                \)
+              -#%img.ico{:src => "#{asset_path 'add_comment_icon.png'}", :border => 0}
+                %span.count_icon
+                  = @memory.comments.count
+
+            .accordeon_cont.comments_row{ :style => "display:block"}
+
+              %div.list_comments
+                #comment_show
+                = render :partial => 'user_comment', :collection => @memory.comments.order('created_at desc') || 'This memory has no comments'
+                .spacer
+        .spacer
+        -# if !@memory.additional_images.count.eql?(0)
+          .memories_list_row
+            .accordion_btn.open
+              %span.title
+                Additional Photos
+                \(
+                = @memory.additional_images.count
+                \)
+              -#%img.ico{:src => "#{asset_path 'white_camera.png'}", :border => 0}
+              %span.count_icon
+                / = @memory.additional_images.count
+          
+            .accordeon_cont.memories_list{ :style => "display:block"}
+              - @memory.additional_images.each do |img|
+                - if img.google_page_url.present?
+                  %a.memory_link.media{:href => "#{img.this_url(:large)}", :rel => "title=<a href='#{img.google_page_url}' target='_blank' style='color:red'>Source</a>"}
+                    .memory_additional
+                      %img.preview_additional{:src => img.this_url(:small), :title => 'View larger', :alt => 'View larger'}
+                - else
+                  %a.memory_link.media{:href => "#{img.this_url(:large)}", :rel => "title=<a href='#{@memory.main_image.google_page_url}' target='_blank' style='color:red'>Source</a>"}
+                    .memory_additional
+                      %img.preview_additional{:src => img.this_url(:small), :title => 'View larger', :alt => 'View larger'}
+              .spacer
+      
+        -# if !@memory.description.blank?
+          .description_row
+            .accordion_btn.open
+              %span.title
+                Description
+            .accordeon_cont.memory_description{ :style => "display:block"}
+              = @memory.description 
+          
+
+      
+              
+        -# Update config.yml you_tube_video: values to change the dimensions of the iframes
+        - if @memory.user_videos.count > 0
+          .videos_row
+            .accordion_btn.open
+              %span.title
+                Videos
+                \(
+                = @memory.user_videos.count
+                \)
+              / %img.ico{:src => "#{asset_path 'add_comment_icon.png'}", :border => 0}
+              -# %span.count_icon
+                = @memory.user_videos.count
+            
+            .accordeon_cont.comments_row{ :style => "display:block"}
+              %div.list_videos
+                %ul
+                  - @memory.user_videos.each do |vid|
+                    %li
+                      %a{:href => "http://www.youtube.com/v/#{vid.video_id}&hl=en&fs=1&rel=0&autoplay=1", :rel => "shadowbox;width=405;height=340;player=swf"}
+                        = image_tag "http://img.youtube.com/vi/#{vid.video_id}/1.jpg", :title => "Watch video", :alt => "Watch video"
+      
+      
+        - remembered_by_count = @memory.remembered_by.count 
+        - if remembered_by_count > 0
+          .remembered_row
+            .accordion_btn.open
+              %span.title
+                Users Who Also Remember This
+              %img.ico{:src => "#{asset_path 'remembers_small_normal.png'}", :border => 0}
+              %span.count_icon
+                = remembered_by_count
+            .accordeon_cont.memory_remembered{ :style => "display:block"}
+              - @memory.remembered_by.each do |r|
+                .remembered
+                  %a.img{:href => "#{users_profile_path(r)}"}
+                    .img_memory_remembered
+                      = image_tag r.my_profile_image, :border => 0, :alt => r.name, :title => r.name
+                  
+              .spacer
+      
+      -#.share
+        %span.social.st_twitter_hcount{:displayText => 'Tweet'}
+        %span.social.st_facebook_hcount{:displayText => 'Facebook'}
+        %span.social.st_fblike_hcount{:displayText => 'Facebook Like'}
+        %span.social.st_plusone_hcount{:displayText => 'Google +1'}
+        %span.social.st_stumbleupon_hcount{:displayText => 'StumbleUpon'}
+        %span.social.st_pinterest_hcount{:displayText => 'Pinterest'}
+        %span.social.st_email_hcount{:displayText => 'Email'}

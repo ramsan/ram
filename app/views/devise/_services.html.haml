@@ -1,0 +1,9 @@
+%a{:href => "/auth/facebook"}
+  = image_tag 'facebook_64.png', :alt => "Facebook", :title => 'Facebook', :border => 0, :size => "64x64"
+
+- if request.path =~ /in$|services$/
+  %a{:href => "/auth/twitter"}
+    = image_tag 'twitter_64.png', :alt => "Twitter", :title => 'Twitter', :border => 0, :size => "64x64"
+    
+  -#%a{:href => "/auth/google"}
+    = image_tag 'google_64.png', :alt => "Google", :title => 'Google', :border => 0, :size => "64x64"

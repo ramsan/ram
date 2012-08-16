@@ -1,0 +1,37 @@
+.showdown_memory_fields
+  .memoryFormRow
+    %div{:id => "image_m#{m}"}
+      = image_tag "default.png", :class => "showdown_preview"
+      
+    .image
+      - if m == 1 || m == 2
+        = f.text_field("memory_#{m}", :id => "memory_#{m}_name", :placeholder => "Memory #{m} (required)", :class => "showdownMemoryName", :maxlength => 18)
+      - else
+        = f.text_field("memory_#{m}", :id => "memory_#{m}_name", :placeholder => "Memory #{m} (optional)", :class => "showdownMemoryName", :maxlength => 18)
+      #img_template{:style => 'display:none'}
+        .field
+          %span.file_name
+          %span.remove.files{:title => 'Remove file'} X
+          .img_hidden{:style => 'width:0px;height:0px;overflow:hidden'}
+          
+      #google_template{:style => 'display:none'}
+        .field
+          %img
+          = f.hidden_field("image_#{m}_google_page_url", :class => "image_#{m}_google_page_url")
+          = f.text_field("image_#{m}_google_thumb", :class => "image_#{m}_google_thumb")
+          = f.text_field("image_#{m}_google_main", :class => "image_#{m}_google_main")
+
+      .memoryImages
+        %label
+          Add photo #{m}
+          - if m == 1 || m == 2
+            %span (required)  
+        .buttons
+          #fromGoogle.cont_search{:style => 'position:relative'}
+            = link_to image_tag("greySearchButton.png"), "#", :id => "search_link#{m}"
+          .field.pointer
+            %span.file.pointer
+              &nbsp;
+              %span.button.pointer 
+                = image_tag "greyUploadButton.png"
+              %input.pointer{:type => 'file', :name => "showdown[image_m#{m}]"}

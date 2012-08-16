@@ -1,0 +1,38 @@
+= form_for @showdown, :html => {:multipart => true} do |f|
+  -if @showdown.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@showdown.errors.count, "error")} prohibited this showdown from being saved:"
+      %ul
+        - @showdown.errors.full_messages.each do |msg|
+          %li= msg
+  .create
+    .row1
+      .memoryFormRow
+        .newTitle
+          = f.text_field :question, :id => "showdownQuestion", :placeholder => "Showdown Question (60 characters or less)", :maxlength => 60
+        %br/
+        .decadeOption
+          = f.label :decade
+          = f.select :decade, Memory::DECADES.sort.each(&:reverse!), :include_blank => true, :prompt => "select"
+      .memoryFormRow
+        .pickCategory
+          %label 
+            Select a Category
+            %span required
+          %ul
+            - Category.all.sort.each do |obj|
+              %li.category
+                =# radio_button_tag 'showdown[category_ids][]', obj.id, @showdown.category.include?(obj), :id => 'category-'+obj.id.to_s
+                = radio_button "showdown", "category_id", obj.id
+                = label_tag 'category-'+obj.id.to_s, obj.name.titleize
+      = render :partial => 'showdown_memory', :locals => {:f => f, :m => 1}
+      = render :partial => 'showdown_memory', :locals => {:f => f, :m => 2}
+      = render :partial => 'showdown_memory', :locals => {:f => f, :m => 3}
+      = render :partial => 'showdown_memory', :locals => {:f => f, :m => 4}
+      = render :partial => 'showdown_memory', :locals => {:f => f, :m => 5}
+  %input{:type => 'hidden', :name => 'showdown[user_id]', :value => current_user.id}
+  .showdownSubmit
+    - if params[:action] == "edit"
+      = image_submit_tag "#{asset_path 'greySaveButton.png'}", :id => 'create_memory_btn'
+    - else
+      = image_submit_tag "#{asset_path 'greySubmitShowdownButton.png'}", :id => 'create_memory_btn'

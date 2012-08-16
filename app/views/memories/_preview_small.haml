@@ -1,0 +1,21 @@
+-if !m.suspended? || m.suspended?  && current_user.try(:admin)
+  - if m.images.size >= 1 && m.user_images.count > 0
+    - cache m.id do
+      %a{:href => memory_path(m)}
+        .memory_box.small_memory{:id => "memory_#{m.id}", :class => "memory_#{m.id} addToMyMemoryBank"}
+          .img
+            -# if m.user_images.count > 0
+            %img.preview{:src => m.user_images.first.this_url(:mosaic), :alt => m.name, :title => m.name}
+          .memory_bigger
+            %a.memory_link.inner_link{:href => memory_path(m), :class => "#{'preview_name_short' if m.name.length > 35}"}
+              .img_big
+                -# if m.user_images.count > 0
+                %img.preview_bigger{:src => m.user_images.first.this_url(:mosaic)}
+              =m.name 
+
+          .memory_full_lightbox
+            //full screen gray overlay
+            #memory_full
+            //memory div loads in here
+            %a.close &times;
+            //close lightbox

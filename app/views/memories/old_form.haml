@@ -1,0 +1,153 @@
+- content_for :head do
+  %script{:src => "http://www.google.com/jsapi?key="}
+  = javascript_include_tag 'google_picker'
+  = javascript_include_tag 'memories/form'
+  :javascript
+    $(document).ready(function(){    
+      //resize profile image
+      $(".img_profile_memory img").load(function() {            
+              processImage($(this), 42, 42);
+      });
+    });
+
+= form_for @memory, :html => {:multipart => true} do |f|
+  -if @memory.errors.any?
+    #error_explanation
+      %h3= "#{pluralize(@memory.errors.count, "error")} prohibited this memory from being saved:"
+      %ul
+        - @memory.errors.full_messages.each do |msg|
+          %li= msg
+          
+  .create
+    .row1
+      .user_row
+        .left
+          .img_profile_memory_cont
+            .img_profile_memory
+              = image_tag @memory.user.my_profile_image
+          .data_profile_user_memory
+            %span.name_user_memory
+              = @memory.user.name
+            %span
+              %br
+              = f.check_box :is_anonymous  
+              / = f.label :is_anonymous
+              = f.label "Hide my name on this post"
+      .step1
+        -#.step1_img
+        .form_row.name_form
+          = f.label :name, "Memory title"
+          = f.text_field :name, :maxlength => 60, :spellcheck => true, :placeholder => "Enter your memory's title here (60 characters or less)"
+        .form_row.description_form
+          / = f.label :description, "What do you remember about #{@memory.name.blank? ? 'this memory' : @memory.name}?"
+          = f.text_area :description, :spellcheck => true, :placeholder => "Have more to say? Write as much as you want here", :title => "enter description here (optional)"
+      
+      .form_row.select_category
+        -#.step2_img
+        .select_category_btn.pointer
+          Select a Category
+          %span.arrow
+            %img{:src => "#{asset_path 'black_form_down_arrow.png'}", :border => 0}
+        .select_form{:style => "display:none"}
+          %label Categories (select one, required)
+          %ul.form_categories
+            - Category.all.sort.each do |obj|
+              %li.category
+                = radio_button_tag 'memory[category_ids][]', obj.id, @memory.categories.include?(obj), :id => 'category-'+obj.id.to_s
+                = label_tag 'category-'+obj.id.to_s, obj.name
+          .decade_form
+            = f.label :decade
+            = f.select :decade, Memory::DECADES.sort.each(&:reverse!), :include_blank => true
+          .date_form
+            = f.label :date_of_memory
+            = f.text_field :date_of_memory
+          %div{:style => 'text-align:right'}
+            %span#close_select_category.close.pointer
+              Done
+            
+      .form_row.upload_images_form
+        -#.step3_img
+        .box
+          %span.title
+            Add photos (required)
+          .buttons
+            .field.pointer
+              %span.file.pointer
+                %span.button.pointer Upload Photo
+                %input.pointer{:type => 'file', :name => 'memory[images_attributes][][image]'}
+            .cont_search{:style => 'position:relative'}
+              %a#search_link{:href => '#'} Search for Image
+            .cont_search{:style => 'position:relative'}
+              %a#external_url_link{:href => '#'} Image URL
+
+      .form_row.upload_videos_form
+        .box
+          %span.title
+            Add a video from Youtube
+          .field
+            = f.fields_for :you_tube_videos do |ytv|
+              %span.name 
+                YouTube video URL
+              = ytv.text_field :url
+              = ytv.hidden_field :user_id, :value => current_user.id
+              %span.example
+                ex: http://youtu.be/7f3eS72pIgU
+
+        #img_fields
+          .content_box
+            %h3.title Images to add
+                             
+        #img_template{:style => 'display:none'}
+          .field
+            %span.file_name
+            %span.remove.files{:title => 'Remove file'} X
+            %input{:type => 'hidden', :name => 'memory[images_attributes][][user_id]', :value => current_user.id.to_s}
+            .img_hidden{:style => 'width:0px;height:0px;overflow:hidden'}
+           
+        #google_template{:style => 'display:none'}
+          .field
+            %img
+            %input{:type => 'hidden', :name => 'memory[images_attributes][][user_id]', :value => current_user.id.to_s}
+            %input.google_page_url{:type => 'hidden', :name => 'memory[images_attributes][][google_page_url]'}
+            %input.google_thumb{:type => 'hidden', :name => 'memory[images_attributes][][google_thumb]'}
+            %input.google_main{:type => 'hidden', :name => 'memory[images_attributes][][google_main]'}
+            %span.remove.remove_img.files{:title => 'Remove image'} X
+            
+        #external_template{:style => 'display:none'}
+          .field
+            %img
+            %input{:type => 'hidden', :name => 'memory[images_attributes][][user_id]', :value => current_user.id.to_s}
+            %input.external_url{:type => 'hidden', :name => 'memory[images_attributes][][external_url]'}
+            %span.remove.remove_img.files{:title => 'Remove image'} X
+
+        - unless @memory.images.count.eql?(0)
+          .form_row
+            .memories_list
+              %h3.title Current images
+            
+              - @memory.user_images.each do |img|
+                %a.memory_link_form{:id => "img_#{img.id}", :href => '#'}
+                  .memory_preview_form
+                    %img.preview_form{:src => img.this_url(:small)}
+                    %span.remove_img.remove.files{:title => 'Remove image', 'data-id' => img.id} X
+                    
+            .spacer               
+      .spacer 
+           
+
+    .form_row.buttons_form
+      = f.submit :id => 'create_memory_btn', :class => "save_btn btn yellow pointer"
+      .facebook_form
+        %span.check_form
+          = f.check_box :share_on_facebook
+          = f.label "Also post this to"
+        
+        %span.ico_facebook
+          %img{:src => "#{asset_path 'share_to_facebook.png'}", :border => 0}
+        
+        %br
+        %br
+        Change your Post to FB preferences on 
+        %a{:href => users_home_path(:anchor => 'settings')}
+          SETTINGS
+       

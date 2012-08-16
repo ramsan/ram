@@ -1,0 +1,8 @@
+<% if @result.has_key?(:id) -%>
+$('#img_<%= @result[:id] %>').remove();
+<% else -%>
+alert('There was a problem deleting the image, please try again');
+<% end -%>
+$('#show_comments').html('');
+$('#show_comments').prepend("<%= escape_javascript(render :partial => 'memories/user_comment', :collection => @memory.comments.order('created_at desc') || 'This memory has no comments') %>");
+$('#comment_count').html('Comments ( <%= @memory.comments.count %> )');

@@ -1,0 +1,6 @@
+$('<%= escape_javascript(render :partial => "shared/livefeed_memory", :collection => @feeds, :as => :feed) %>').hide().prependTo('#memoriesFeed').slideDown("slow");
+$('.feedBackMemory .image img').first(function(){
+		this.src = this.src}).load(function(){
+			processImage($(this), 65, 65);
+});
+$('.feedBackMemory:last-child').remove();

@@ -1,0 +1,9 @@
+.DS_Store
+config/database.yml
+config/database.common.yml
+config.common.yml
+config/config.yml
+public/assets
+*.swp
+log/*.log
+tmp/**/*

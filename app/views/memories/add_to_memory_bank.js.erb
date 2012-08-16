@@ -1,0 +1,15 @@
+<% if @can == true %>
+	$.get('/previews/<%= @memory.id -%>/also_remembers', function(data) {
+	  // $('.result').html(data);
+	  console.log('Load was performed from RJS.');
+	});
+	$('li.activePage.memoryBankSliderSection').prepend($("<div class='memoryBankSlider'><div class='image'><a href='<%= memory_path(@memory) %>'><img class='memoryOnMyBank' title='<%= @memory.name %>' src='<%= (@memory.images.first.this_url(:small)).html_safe %>' alt='<%= @memory.name %>'></a></div></div>").hide().fadeIn());
+	if ($('#memoryBankInfo').length > 0) {
+		$('#memoryBankInfo').fadeOut();
+		$('.memoryBankSliderSection').prepend($("<div class='memoryBankSlider'><div class='image'><a href='<%= memory_path(@memory) %>'><img class='memoryOnMyBank' title='<%= @memory.name %>' src='<%= (@memory.images.first.this_url(:small)).html_safe %>' alt='<%= @memory.name %>'></a></div></div>").hide().fadeIn());
+	}
+<% elsif @its_remembered == true %>
+	alert("DoYouRemember? you remembered this memory before.")
+<% else %>
+	alert("This memory is yours, we are sure that you remember it.")
+<% end %>

@@ -1,0 +1,9 @@
+- @memories[0..5].each do |m|
+  .memory.toolTip{:title => truncate(dyr_title(m.name), :length => 30)}
+    = image_tag m.images.first.this_url(:medium)
+    
+#spacer
+- if @memories.count >= 6
+  - @memories[6..1000].each do |m|
+    .memory.toolTip{:class => "#{cycle("","","","","beforeLast","last")}", :title => "#{truncate(dyr_title(m.name), :length => 30)}"}
+      = image_tag m.images.first.this_url(:medium)

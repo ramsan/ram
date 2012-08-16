@@ -1,0 +1,74 @@
+/ = content_for :head do
+/   :javascript
+/     var sort = "#{params[:sort] ? params[:sort] : 'memories.views'}";
+/     var path = "#{request.path}";    
+/     $(document).ready(function(){
+/       if(sort == 'memories.created_at'){
+/         $('#view_most_popular').children('.title').removeClass('on');
+/         $('#view_most_popular').children('.description').removeClass('on');
+/         $('#view_latest').children('.title').addClass('on');
+/         $('#view_latest').children('.description').addClass('on');
+/       }
+/       $('#view_latest').click(function(){
+/               window.location = path + '?sort=memories.created_at';
+/             });
+/             $('#view_most_popular').click(function(){
+/               window.location = path + '?sort=memories.views';
+/             });
+/     });
+/ = content_for :head do
+/   :javascript
+/     $(document).ready(function(){
+/       $('#view_latest').click(function(){
+/         $('.title a, .description a').removeClass('on');
+/         $(this).addClass('on');
+/         $('.latest').show();
+/         $('.most_popular').hide();
+/       });
+/       $('#view_most_popular').click(function(){
+/         $('.menu_left a').removeClass('current');
+/         $('.choose_category').children('.title').removeClass('on');
+/         $('.choose_category').children('.description').removeClass('on');
+/         $('.view_latest').children('.title').removeClass('on');
+/         $('.view_latest').children('.description').removeClass('on');
+/         $(this).addClass('current');
+/         $('.most_popular').show();
+/         $('.latest').hide();
+/       });
+/       #{"$('#view_latest').click();" if params[:show_latest]}      
+/       $('select[name="gender"]').change(function(e){
+/         if($(this).val() != ''){
+/           $('#similar_submit').removeAttr('disabled');
+/           alert("Hi");
+/         }else{
+/           $('#similar_submit').attr('disabled', 'disabled');
+/         }
+/       });
+/       
+/       
+/     });
+
+-#%h2= 'Memories' + (@category.nil? ? '' : ': ' + @category.name)
+
+.content_box
+  .top_menus
+    =# render :partial => 'shared/order_by_and_categories'
+    =# render :partial => 'shared/categories_and_decades'
+
+  .memories_list
+    = render :partial => "memories/preview", :collection => @memories, :as => :m
+    - if @memories.count.eql?(0)
+      Sorry, there are no memories we can suggest - how about you search for some in the box above?
+
+    .memories_list.latest
+      = render :partial => "memories/preview", :collection => @memories_latest, :as => :m
+      .spacer
+
+    .memories_list.most_popular{:style => 'display:none'}
+      = render :partial => "memories/preview", :collection => @memories_most_popular, :as => :m
+      .spacer
+    .spacer
+  = render :partial => 'shared/categories_and_decades'
+  .hidden= paginate @memories
+
+.spacer

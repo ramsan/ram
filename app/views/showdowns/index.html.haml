@@ -1,0 +1,15 @@
+- content_for :head do
+  = javascript_include_tag "showdown"
+
+%h1 Listing showdowns
+.links
+  = link_to 'Create New Showdown', new_showdown_path
+%br/  
+- @showdowns.each do |showdown|
+  %hr
+  .links
+    = link_to 'Edit', edit_showdown_path(showdown)
+    = link_to 'Delete', showdown, :confirm => 'Are you sure?', :method => :delete
+  = render :partial => 'listing_showdown', :locals => {:showdown => showdown}
+.spacer  
+= paginate @showdowns

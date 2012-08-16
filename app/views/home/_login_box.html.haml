@@ -1,0 +1,29 @@
+//hiding this for now
+#loginBox
+  #welcomeMessage
+    %h1 Welcome to DoYouRemember?
+    %h2 The site that takes you back.
+  #loginOptions
+    = link_to image_tag(asset_path 'facebook_login_bar.png'), new_user_session_path, :class => "loginOption"
+    = link_to image_tag(asset_path 'twitter_login_bar.png'), new_user_session_path, :class => "loginOption"
+
+    = link_to "Register", new_user_registration_path
+    or 
+    = link_to "login", new_user_session_path
+    with email
+  - if session[:sawbirthyearmemories] != true
+    #orMoreOptions
+      &mdash; Or &mdash;
+    #birthYearOption
+      Enter your birth year to continue as a guest
+    
+      = form_tag('/entrance', :method => :put, :id => "birthYear") do
+        %table#birth_year_table
+          %tr
+            %td= text_field_tag '1', nil, :in => 1..1, :value => 1, :disabled => true
+            %td= text_field_tag '9', nil, :in => 9...9, :value => 9, :disabled => true
+            %td= text_field_tag 'ten', nil, :in => 1...9, :placeholder => "Y", :size => 1, :maxlength => 1
+            %td= text_field_tag 'unid', nil, :in => 0...1, :placeholder => "Y", :size => 1, :maxlength => 1
+        =# select_year(00, :start_year => 99, :end_year => 2000)
+        = submit_tag "continue", :title => "Input your birth year", :id => "getIn"
+      =# link_to "Skip", entrance_path(:birthYear => "skipped"), :id => "skipBirthYear"

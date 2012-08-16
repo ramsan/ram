@@ -1,0 +1,29 @@
+.categories
+  .top_categories
+    %span.normal Select: Category or Decade
+    .remove.hide_category_list x
+    -# %span.normal.hide_category_list Hide
+  .left_list
+    %span.or OR
+    %ul.categories_list
+      %li
+        %span.cat
+          = link_to "All", root_path
+        %span.num
+          = Memory.count
+      - Category.menu_items.each do |cat_arr|
+        %li
+          %span.cat
+            %a{:href => memories_per_category_path(cat_arr[0])}
+              #{cat_arr[1].titleize}
+          %span.num
+            = cat_arr[2]
+  .right_list
+    %ul.years_list
+      - Memory::DECADES.sort.each do |arr|
+        %li
+          %span.year
+            %a{:href=>"#{memories_per_decade_path(arr[0])}"}
+              = arr[1]
+          %span.num
+            #{Memory.where(:decade => arr[0]).count}

@@ -1,0 +1,57 @@
+#memoriesListView 
+  %h1 Listing All Memories
+  %table
+    %tr
+      %th
+        - if @updown == "DESC"
+          = link_to "Memory", list_view_path(:order => "name", :updown => "ASC"), :method => :post, :class => "upArrow"
+        - else
+          = link_to "Memory", list_view_path(:order => "name"), :method => :post, :class => "downArrow"
+      %th 
+        - if @updown == "DESC"
+          = link_to "Tag", list_view_path(:order => "categories_memories_ids", :updown => "ASC"), :method => :post, :class => "upArrow"
+        - else
+          = link_to "Tag", list_view_path(:order => "categories_memories_ids"), :method => :post, :class => "downArrow"
+      %th 
+        - if @updown == "DESC"
+          = link_to "User", list_view_path(:order => "user_id", :updown => "ASC"), :method => :post, :class => "upArrow"
+        - else
+          = link_to "User", list_view_path(:order => "user_id"), :method => :post, :class => "downArrow"
+      
+      %th Follow
+      %th 
+        - if @updown == "DESC"
+          = link_to "Comments", list_view_path(:order => "comments_count", :updown => "ASC"), :method => :post, :class => "upArrow"
+        - else
+          = link_to "Comments", list_view_path(:order => "comments_count"), :method => :post, :class => "downArrow"
+        
+      %th 
+        - if @updown == "DESC"
+          = link_to "Created", list_view_path(:order => "created_at", :updown => "ASC"), :method => :post, :class => "upArrow"
+        - else
+          = link_to "Created", list_view_path(:order => "created_at"), :method => :post, :class => "downArrow"
+    - @memories.each do |m|
+      %tr{:class => "hover #{cycle("white", "grey")}"}
+        %td.bold= link_to m.name, memory_path(m), :class => "memory_list"#, :remote => true
+        %td= link_to dyr_categories_title(m.category.name), memories_per_category_path(m.category)  if !m.category.nil?
+        %td= link_to m.user.name, users_profile_path(m.user)
+        %td
+          - if m.is_anonymous || (current_user && m.user.eql?(current_user))
+            \
+          - elsif current_user && current_user.followees.include?(m.user)
+            = link_to "Unfollow", unfollow_preview_path(m.user, :list => true), :remote => true, :class => "following_#{m.user.id if m.user}", :title => 'Following this user. Click to unfollow.'
+          - else
+            -# .is_following.grey.pointer{:title => 'You are not following this user.  Click to follow.', :class => "not-following_#{m.user.id if m.user}", :list => true}
+            .is_following.grey.pointer
+              = link_to "Follow", follow_preview_path(m.user, :list => true), :remote => true, :class => "not-following_#{m.user.id if m.user}", :title => 'You are not following this user.  Click to follow.'
+              -# {:title => 'You are not following this user.  Click to follow.', :class => "not-following_#{m.user.id if m.user}", :list => true}
+            
+        %td= m.comments_count
+        %td= m.created_at.to_formatted_s(:list_view)
+  .memory_full_lightbox
+    //full screen gray overlay
+    #memory_full
+    //memory div loads in here
+    %a.close &times;
+    //close lightbox  
+  = paginate @memories

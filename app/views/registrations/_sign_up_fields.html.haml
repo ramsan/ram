@@ -1,0 +1,45 @@
+.field
+  - if session[:omniauth].present? && session[:omniauth]['extra']['raw_info']['name']
+    = f.text_field :full_name, :value => session[:omniauth]['extra']['raw_info']['name']
+  - else
+    = f.text_field :full_name, :placeholder => "Full Name"
+.field
+  - if !session[:omniauth].nil? && session[:omniauth]['extra']['raw_info']['email']
+    = f.hidden_field :email, :value => session[:omniauth]['extra']['raw_info']['email']
+  - else  
+    = f.email_field :email, :placeholder => "Email"
+
+- if !session[:omniauth].nil? && session[:omniauth]['password']
+  = f.hidden_field :password, :value => session[:omniauth]['password']
+- else
+  .field
+    = f.password_field :password, :placeholder => "Password"
+
+- if !session[:omniauth].nil? && session[:omniauth]['password']
+  = f.hidden_field :password_confirmation, :value => session[:omniauth]['password']
+- else
+  .field
+    = f.password_field :password_confirmation, :placeholder => "Password Confirmation"
+.field.birthYear
+  Birth Year:
+  = f.collection_select :birth_year, ((Date.today.year - 70)..Date.today.year - 12).to_a, :to_s, :to_s, :prompt => "Select"  
+
+
+- if !session[:omniauth].nil? && session[:omniauth][:info][:image]
+  = f.hidden_field :profile_image_url, :value => session[:omniauth][:info][:image]
+- else
+  .field
+    .info Profile Image
+    .fileinputs
+      = f.file_field :profile_image, :name => "upload", :id => "upload", :class => "file"
+      .fakefile
+        %input.uploadButton
+    .pickProfileImage
+      Or
+      = link_to image_tag("chromeCar.png", :title => "Yellow Emblem"), "#", :class => "avatar", :id => "chromeCar.png"
+      = link_to image_tag("blueEmblem.png", :title => "Yellow Emblem"), "#", :class => "avatar", :id => "blueEmblem.png"
+      = link_to image_tag("yellowEmblem.png", :title => "Yellow Emblem"), "#", :class => "avatar", :id => "yellowEmblem.png"
+      = link_to image_tag("redShoes.png", :title => "Red Shoes"), "#", :class => "avatar", :id => "redShoes.png"
+    #selectOne Select One
+    = f.hidden_field :avatar, :id => "avatar_choice"
+    

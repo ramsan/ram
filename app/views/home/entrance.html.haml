@@ -1,0 +1,44 @@
+!!! 5
+
+/[if lt IE 7] <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en">
+/[if IE 7] <html class="no-js lt-ie9 lt-ie8" lang="en">
+/[if IE 8] <html class="no-js lt-ie9" lang="en">
+/ [if gt IE 8]<!
+%html.no-js{:lang => "en"}
+  / <![endif]
+  %head
+    %meta{:charset => "utf-8"}
+    %meta{:content => "IE=edge,chrome=1", "http-equiv" => "X-UA-Compatible"}
+    %title DoYouRemember?
+    %meta{:content => "", :name => "description"}
+    %meta{:content => "width=device-width", :name => "viewport"}
+    %link{:href => "css/style.css", :rel => "stylesheet"}
+    = stylesheet_link_tag "entrance"
+    %script{:src => "js/libs/modernizr-2.5.3.min.js"}
+    = csrf_meta_tags
+  %body
+    /[if lt IE 7] <p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p>
+    #container
+      %nav
+        %ul
+          %li{:id => "ALL", :class => "#{"span" unless params[:category].present? }"}= link_to "All Categories", entrance_path, :remote => true
+          - @categories[0..20].each do |c|
+            %li{:id => c.id, :class => "#{"span" if params[:category] == c.to_param}"}= link_to c.name.titleize, entrance_path(:category => c)#, :remote => true
+      %article
+        = render :partial => 'login_box'
+
+        #latestMemories
+          = render :partial => 'latest_memories'
+
+              
+    = javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'
+    = javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js'
+    = javascript_include_tag "silvester", "transformie"
+    = javascript_include_tag "tooltip", "jquery.numeric", "entrance", "application"
+    - if Rails.env.eql?('development')
+      :javascript
+        window.jQuery || document.write('<\/script>')
+        var _gaq=[['_setAccount','UA-31381947-1'],['_trackPageview']];
+        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));

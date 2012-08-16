@@ -1,0 +1,53 @@
+= content_for :head do
+  = javascript_include_tag "jquery.sausage", "home" #,"lightbox"
+  
+    
+.home_content
+  -# if user_signed_in? == true
+    .betaFeedback.shrinked= mail_to "info@doyouremember.com", "We are in beta and appreciate feedback. <b>Click here</b> to send us suggestions, fixes, improvements or just to say hi. Thank you for visiting.".html_safe, :subject => "Feedback for doyouremember.com"
+  -# else  
+    .betaFeedback= mail_to "info@doyouremember.com", "We are in beta and appreciate feedback. <b>Click here</b> to send us suggestions, fixes, improvements or just to say hi. Thank you for visiting.".html_safe, :subject => "Feedback for doyouremember.com"
+  -# if params[:controller]  == "home" && params[:action] == "index"
+    - if user_signed_in? == false
+      - if params[:action] != "login_register"
+        = render "shared/not_logged_in"
+  -# if !current_user
+    = form_tag memories_per_similar_demographics_path do
+      Born in:
+      = select_tag :birth_year, options_for_select(((Date.today.year - 70)..Date.today.year).to_a, :selected => (Date.today.year - 55))
+      &nbsp;
+      Gender:
+      = select_tag :gender, options_for_select(%w(male female)), :include_blank => true
+      = submit_tag 'Show similar memories', :disabled => true, :id => 'similar_submit' 
+  .content_box
+    -#%h1=  request.headers.to_xml
+    -# if !@special_title.nil?
+      .special_title
+        %h1= dyr_title(@special_title)
+      .spacer
+    -# if params[:action] == "index"
+      = render "shared/livefeed"
+      = render "shared/showdown_vote"
+      .spacer
+      %br/
+    -#.top_menus
+      = render :partial => 'shared/order_by_and_categories'
+    -# if @slider_memories != nil
+      = render "shared/slider"
+      .spacer
+    #memories_list
+      =render 'shared/memories_list'  
+      
+    -#.view_all
+      = link_to 'View All', memories_path
+      - if can_use_demographics?
+      = link_to 'You might like . . .', memories_per_similar_demographics_path
+      .spacer
+
+    #new_memory_lightbox
+      //full screen gray overlay
+      #new_memory_container
+      //memory div loads in here
+      %a.close &times;
+      //close lightbox
+  =# render :partial => 'birth_year_lightbox'

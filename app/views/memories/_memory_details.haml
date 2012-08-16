@@ -1,0 +1,29 @@
+#newMemoryComment.clearfix
+  .left
+    #comment_img
+  .right      
+    .memory-preview-data
+      #memories_form
+      = form_for Image.new, :html => {:multipart => true} do |f|
+        %input{:type => 'hidden', :name => :as_comment, :value => true}              
+        %input{:type => 'hidden', :name => 'images[][user_id]', :value => current_user.id.to_s}
+        %input{:type => 'hidden', :name => 'images[][memory_id]', :value => @memory.id.to_s}
+        %input.google_page_url{:type => 'hidden', :name => 'images[][google_page_url]'}
+        %input.google_thumb{:type => 'hidden', :name => 'images[][google_thumb]'}
+        %input.google_main{:type => 'hidden', :name => 'images[][google_main]'}
+        %input.external_url{:type => 'hidden', :name => 'images[][external_url]'}
+
+        .commentDetails
+          = image_tag (current_user.my_profile_image)
+          %textarea#newUserComment{:name => 'images[][caption]', :title => 'Photo caption', :spellcheck => true, :rows => 3, :cols => 50, :placeholder => "Write your comment here"}
+        .newCommentButtons
+          .fileinputs
+            Upload an image: 
+            %input#my_comment_image_upload{:type => 'file', :name => 'images[][image]', :class => "myFile"}
+            .fakefile
+              -#%input.upload_btn
+          .google_search.clearfix
+            %a#search_link{:href => '#', :style => 'margin:0'} Search for an image 
+            %a#external_link{:href => '#'} Image URL
+
+            = f.submit 'Post', :id => "postNewComment", :class => "fancy_button"

@@ -1,0 +1,62 @@
+%div.memory_image{:id => "commentid_#{img.id}"}
+  .col1
+    - if img.has_image?
+      %a{:href => memory_path(img.memory.id)}
+        %img.comment{:src => img.this_url(:small), :alt => img.memory.name, :title => img.memory.name}
+    - elsif img.memory.images.size >= 1
+      %img{:src => img.memory.images.first.this_url(:medium)}
+  .col2
+    .added
+      %span.name
+        Memory:
+        %a{:href => memory_path(img.memory.id), :id => 'memory_name'}= img.memory.name
+    - unless img.caption.blank?
+      .caption
+        = img.caption
+    Posted: #{ img.created_at.to_formatted_s(:long_custom)}
+    .userCommented
+      %div{:id => "userCommentedIn_#{img.id}", :style => "display:none", :class => "commentform"}
+        - if current_user
+          -if current_user.id == img.user_id
+            .user_row2
+              .memory-preview-data
+                #memoryDetails
+                  #newMemoryComment
+                    .comment
+                      .right
+                        #memories_form
+                          = form_for img, :remote => true, :html => {:multipart => true, :id => "edit_image"} do |f|
+                            / %h2 Add comment Add Comment and/or a Photo if you want!
+                            %input{:type => 'hidden', :name => :as_comment, :value => true}
+                            %input{:type => 'hidden', :name => :user_comment, :value => true}
+                            %input{:type => 'hidden', :name => 'images[user_id]', :value => current_user.id.to_s}
+                            %input{:type => 'hidden', :name => 'images[memory_id]', :value => img.memory_id.to_s}
+                            %input.edit_google_page_url{:type => 'hidden', :name => 'images[google_page_url]', :value => img.google_page_url.to_s}
+                            %input.edit_google_thumb{:type => 'hidden', :name => 'images[google_thumb]', :value => img.google_thumb.to_s}
+                            %input.edit_google_main{:type => 'hidden', :name => 'images[google_main]', :value => img.google_main.to_s}
+                            %input.external_url{:type => 'hidden', :name => 'images[external_url]', :value => img.external_url.to_s}
+
+                            .commentDetails
+                              = image_tag (current_user.my_profile_image)
+                              %textarea#newUserComment{:name => 'images[caption]', :title => 'Photo caption', :spellcheck => true, :rows => 1, :cols => 64, :onkeyup => "autoresize('userCommentedIn_#{img.id}')", :onfocus => "autoresize('userCommentedIn_#{img.id}')",:onblur => "autoresize('userCommentedIn_#{img.id}')",:placeholder => "Write your comment here"}
+                                = img.caption.to_s
+                            .left
+                              #edit_comment_img
+                                - if img.has_image?
+                                  %span.remove{:title => 'Remove image', :onclick => "edit_remove_image()"}X
+                                  %img{:src => img.this_url(:small)}
+                            .spacer
+                            .newCommentButtons
+                              .fileinputs
+                                %input#my_comment_image_upload{:type => 'file', :name => 'images[][image]', :class => "myFile"}
+                                .fakefile
+                                  %input.upload_btn
+                              .google_search
+                                %a#edit_search_link{:href => '#', :style => 'margin:0', :onclick => 'edit_imagebysearch()'} Search for an image
+                                -#%a#external_link{:href => '#'} Image URL
+                                = f.submit 'Post', :id => "postNewComment"
+  .delete_position
+    %span{:class => 'edit', :onclick => "edit_commentjs('userCommentedIn_#{img.id}')"}
+      Edit
+    %a{:href => images_delete_by_images_memory_id_path(:memory_id => img.memory.id, :id => img.id ), :onclick => "destroycomment('commentid_#{img.id}')", 'data-remote' => true, :class => 'remove'}x
+  .spacer

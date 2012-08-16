@@ -1,0 +1,18 @@
+.register_login_box
+  .register_box
+    %span Please Sign Up through Facebook to continue...
+    %a{:href => "/auth/facebook"}
+      = image_tag asset_path 'register_big.png', :alt => "Facebook", :title => 'Facebook', :border => 0, :size => "146x28"
+
+    %a.nothanks{:href => "/"}
+      No thanks, I'll just browse for now
+  
+  .login_buttons
+    %span
+      Already signed up?
+    %a{:href => "/auth/facebook", :class => "social_button_m"}
+      = image_tag asset_path 'login_m_f.png', :alt => "Facebook", :title => 'Facebook', :border => 0, :size => "146x28"
+
+
+    %a{:href => "/auth/twitter", :class => "social_button_m"}
+      = image_tag asset_path 'login_m_t.png', :alt => "Twitter", :title => 'Twitter', :border => 0, :size => "146x28"

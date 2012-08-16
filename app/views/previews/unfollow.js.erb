@@ -1,0 +1,21 @@
+<% if !@list.nil? %>
+  var nodes = $('a.following_<%= @followee.id -%>');
+  nodes.attr('title', 'Your are not following this user. Click to follow.');
+  nodes.removeClass('following_<%= @followee.id%>');
+  nodes.addClass('not-following_<%= @followee.id%>');
+  nodes.each(function(index) {
+  		$(this).attr('href', "<%= url_for(follow_preview_path(@followee, :list => true)) %>");
+  		$(this).text("Follow").effect("highlight", {}, 3000);
+  });
+<% else %>
+  var nodes = $('.following_<%= @followee.id%>');
+  nodes.attr('title', 'Your are not following this user. Click to follow.');
+  nodes.removeClass('green');
+  nodes.addClass('grey');
+  nodes.addClass('not-following_<%= @followee.id%>');
+  nodes.removeClass('following_<%= @followee.id%>');
+  nodes.each(function(index) {
+      // console.log(index + ': ' + $(this).text());
+  		$('.usersFollowing').text(<%= @followee.followers.size %> + " Followers");
+  });
+<% end %>

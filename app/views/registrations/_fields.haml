@@ -1,0 +1,90 @@
+%p
+  = f.label :first_name, 'First name *'
+  %br/
+  - if !session[:omniauth].nil? && session[:omniauth]['extra']['raw_info']['name']
+    = f.text_field :first_name, :value => session[:omniauth]['extra']['raw_info']['name'].split(' ').first
+  - else
+    = f.text_field :first_name
+%br
+%p
+  = f.label :last_name, 'Last name *'
+  %br/
+  - if !session[:omniauth].nil? && session[:omniauth]['extra']['raw_info']['name']
+    = f.text_field :last_name, :value => session[:omniauth]['extra']['raw_info']['name'].split(' ').last
+  - else
+    = f.text_field :last_name
+%br/
+- if !session[:omniauth].nil? && session[:omniauth]['password']
+  = f.hidden_field :password, :value => session[:omniauth]['password']
+- else
+  %p
+    = f.label :password, 'Password *'
+    - if !f.object.new_record?
+      %i (leave blank if you don't want to change it)
+    %br/
+    = f.password_field :password
+  %br/
+
+- if !session[:omniauth].nil? && session[:omniauth]['password']
+  = f.hidden_field :password_confirmation, :value => session[:omniauth]['password']
+- else
+  %p
+    = f.label :password_confirmation, 'Password confirmation *'
+    %br/
+    = f.password_field :password_confirmation
+  %br
+%p
+  = f.label :email, 'Email *'
+  %br/
+  = f.email_field :email
+%br
+-#LEAVE
+
+- if !session[:omniauth].nil? && session[:omniauth][:info][:image]
+  = f.hidden_field :profile_image_url, :value => session[:omniauth][:info][:image]
+- else
+  %p.image_profile  
+    = f.label :profile_image, 'Profile image'
+    - if resource.profile_image.present?
+      %br
+      %img{:src => resource.my_profile_image}
+      %span#delete_image_span
+        %br
+        %input{:name => 'delete_image', :type => 'checkbox', :value => 1} Delete current profile image  
+      %br
+      %i Upload new to replace current: 
+    %br
+    = f.file_field :profile_image
+  %br
+%p
+  = f.label :birth_year
+  %br/
+  = f.collection_select :birth_year, ((Date.today.year - 70)..Date.today.year).to_a, :to_s, :to_s, :prompt => true  
+%br
+- if !session[:omniauth].nil?
+  
+- else
+  %p
+    = f.label :zip_code
+    %br/
+    = f.text_field :zip_code
+  
+  %br
+  %p.fw
+    = f.label :gender
+    %br/  
+    = f.radio_button :gender, :male
+    Male
+    &nbsp;      
+    = f.radio_button :gender, :female
+    Female
+  -#LEAVE
+  %br
+  %p.area.fw
+    = f.label :about_me, "My Nostalgic Self"
+    %br/  
+    = f.text_area :about_me
+-#  
+  %p.captcha
+    - if f.object.new_record?
+    = recaptcha_tags :public_key => CONFIG[:recaptcha][:public]

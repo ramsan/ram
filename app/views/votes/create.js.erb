@@ -1,0 +1,30 @@
+$('#showdownVote').addClass("results", 200);
+$('#voting_showdown *:radio').fadeOut();
+$('#memory_1').append('<div class="results"><%= number_with_delimiter(@showdown.memory_1_votes_count) %></div>');
+$('#memory_2').append('<div class="results"><%= number_with_delimiter(@showdown.memory_2_votes_count) %></div>');
+$('#memory_3').append('<div class="results"><%= number_with_delimiter(@showdown.memory_3_votes_count) %></div>');
+$('#memory_4').append('<div class="results"><%= number_with_delimiter(@showdown.memory_4_votes_count) %></div>');
+$('#memory_5').append('<div class="results"><%= number_with_delimiter(@showdown.memory_5_votes_count) %></div>');
+$('#submit_my_vote').html('<%= escape_javascript(render :partial => "showdowns/showdown_vote_results") %>');
+$('#submit_my_vote').append('<%= escape_javascript(render :partial => "shared/showdown_countdown") %>');
+var counter = 0
+function countdown() {
+		var s = $('.showdownCountDown');  
+    var reference = "'" + $('#skip_showdown a').attr('href') + "'";
+		var nextShowdown = reference.replace(/\D/g,'');
+		if(parseInt(s.html()) == 0) {
+			clearInterval(counter);
+			$('#autoLoadingShowdown').remove();
+			$.ajax({
+				url: '/voting/next_vote.js?showdown=' + nextShowdown,
+				type: "GET",
+			  success: function(data) {
+			    // console.log("fired");
+			  }
+			});
+
+      // console.log('Complete.');
+    }
+    s.html(parseInt(s.html()-1));
+}
+counter = setInterval('countdown()',1000);

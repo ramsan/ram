@@ -1,0 +1,89 @@
+#notLoggedIn.memory-preview-data
+  .userData
+    /= render "home/login_box"
+    .img_profile_memory_cont
+      .img_profile_memory
+        = image_tag (@memory.is_anonymous ? 'default-user-icon.gif' : @memory.user.my_profile_image)
+    .data_profile_user_memory2
+      .userName
+        -if @memory.is_anonymous
+          Anonymous
+        - else
+          = link_to @memory.user.name, users_profile_path(@memory.user.id)
+  
+    .memoryDetails
+      .title
+        %h1= dyr_title(@memory.name)
+        %em 
+          - if !@memory.categories.count.eql?(0)
+            = link_to @memory.categories.first.name.titleize, memories_per_category_path(@memory.categories.first.id) 
+            &nbsp;
+          - if !@memory.decade_name.blank?
+            &nbsp;
+            = link_to @memory.decade_name, memories_per_decade_path(@memory.decade)
+            &nbsp;
+          - if !@memory.date_of_memory.nil?
+            =# @memory.date_of_memory)#.to_formatted_s(:long_custom)
+            = link_to @memory.date_of_memory.to_datetime.to_formatted_s(:long_custom), memories_per_decade_path(@memory.decade)
+            &nbsp;
+        .posted
+          %em 
+            Posted: 
+            - if @memory.created_at.today? 
+              = time_ago_in_words(@memory.created_at) + " ago."
+            - else
+              = @memory.created_at.to_formatted_s(:long_custom)
+        - if !@memory.sale_link.nil? && @memory.sale_link.length >= 7
+          .memorySale
+            =# "#{number_to_currency(@memory.sale_price) if @memory.sale_price}" + 
+            =# link_to "#{number_to_currency(@memory.sale_price) + " - " if @memory.sale_price}" + "Buy It", @memory.sale_link, :target => "_blank" if @memory.sale_link
+            = link_to "Link", @memory.sale_link, :target => "_blank" if @memory.sale_link
+        %br/
+      .memoryDescription
+        = @memory.description
+  
+      #newMemoryComment
+        .left
+          #comment_img
+        .right
+      
+          - if current_user.nil?
+            %br/
+            = link_to "Sign in ",  new_user_session_path
+            -# %a{:href => '/auth/facebook'} Sign in 
+            to add a comment 
+          - else #a registered user, but NOT the memory owner
+            .memory-preview-data
+              -#.userData
+                .img_profile_memory_cont
+                  .img_profile_memory
+                    = image_tag (current_user.my_profile_image)
+                .data_profile_user_memory2
+                  .userName
+                    -if @memory.is_anonymous
+                      Anonymous
+                    - else
+                      = link_to current_user.name, users_profile_path(current_user)
+              = form_for Image.new, :html => {:multipart => true} do |f|
+                / %h2 Add comment Add Comment and/or a Photo if you want!
+                %input{:type => 'hidden', :name => :as_comment, :value => true}              
+                %input{:type => 'hidden', :name => 'images[][user_id]', :value => current_user.id.to_s}
+                %input{:type => 'hidden', :name => 'images[][memory_id]', :value => @memory.id.to_s}
+                %input.google_page_url{:type => 'hidden', :name => 'images[][google_page_url]'}
+                %input.google_thumb{:type => 'hidden', :name => 'images[][google_thumb]'}
+                %input.google_main{:type => 'hidden', :name => 'images[][google_main]'}
+                %input.external_url{:type => 'hidden', :name => 'images[][external_url]'}
+    
+                .commentDetails
+                  = image_tag (current_user.my_profile_image)
+                  %textarea#newUserComment{:name => 'images[][caption]', :title => 'Photo caption', :spellcheck => true, :rows => 1, :cols => 50, :placeholder => "Write your comment here"}
+                .spacer
+                .newCommentButtons
+                  .fileinputs
+                    %input#my_comment_image_upload{:type => 'file', :name => 'images[][image]', :class => "myFile"}
+                    .fakefile
+                      %input.upload_btn
+                  .google_search
+                    %a#search_link{:href => '#', :style => 'margin:0'} Search for an image 
+                    %a#external_link{:href => '#'} Image URL
+                    = f.submit 'Post'#, :class => "mySubmitButton"

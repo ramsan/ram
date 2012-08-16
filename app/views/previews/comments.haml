@@ -1,0 +1,15 @@
+.form_memory
+  %p= truncate(@memory.description, :length => 260)
+  - if @memory.description != nil && @memory.description.length >= 261
+    = link_to "Read More", memory_path(@memory)
+  = form_for @memory, :url => post_comment_preview_path(@memory), :remote => true, :method => :get do |f|
+    = text_area_tag 'memory[caption]'
+    = f.submit 'Save', :class => 'post_comment_btn'
+    .spacer
+.preview_comments{:id => "preview_comments_#{@memory.id}"}
+  - if @memory.comments.count > 0
+    = render :partial => 'comment', :collection => @memory.comments.order('created_at desc').limit(3)
+    = link_to "View all comments (#{@memory.comments.count})", memory_path(@memory, :anchor => 'comments'), :class => "view_all"
+  - else
+    .no_tab_content
+      No comments for this memory

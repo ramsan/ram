@@ -1,0 +1,2 @@
+// $("#followUser").html('<a href="<%= users_profile_path(@followee) %>"><span>Following <%= @followee.name %></span></a><%= link_to 'x', users_unfollow_path(@followee), :title => 'Un-follow', :remote => true, :class => 'unfollow' %>');
+$("#followUser").html('<a href="<%= users_unfollow_path(@followee)-%>" data-remote="true">Following: <%= @followee.name -%></a><span><%= link_to 'x', users_unfollow_path(@followee), :title => 'Un-follow', :remote => true, :class => 'unfollow remove' -%></span>');

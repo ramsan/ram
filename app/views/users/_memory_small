@@ -1,0 +1,8 @@
+- cache memory do 
+  .profile_memory.small_memory
+    %a{:href => memory_path(memory)}
+      .img_memory_profile
+          - if memory.main_image
+            = image_tag memory.main_image.this_url(:thumb)
+          - else
+            = image_tag Image.default_memory

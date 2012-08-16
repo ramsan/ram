@@ -1,0 +1,34 @@
+#birthYearScreen{:rel => "shadowbox"}
+  -# .remove x
+  #hereAreSomeMemories
+    = image_tag "here-are-some-memories.png", :title => "Here are some memories we think you might enjoy"
+  #birthYearMemories
+    - @birth_year_memories.each do |bm|
+      .birthYearhMemory{:class => cycle("left", "center", "right")}
+        .bYMemory
+          - if !bm.user_images.first.nil?
+            = link_to image_tag(bm.user_images.first.this_url(:medium), :title => dyr_title(bm.name)), memory_path(bm)
+          - else
+            = link_to "This memory it's being updated or has no images available at this time", memory_path(bm)
+        .bYdetailInfo
+          .bYUser
+            - if bm.is_anonymous
+              Anonymous
+            - else 
+              = link_to bm.user.name, users_profile_path(bm.user.id), :class => "name med_grey small"
+          .bYCategory
+            - if bm.decade_name
+              = link_to "#{truncate(bm.category.name.titleize, :length => 10)}", memories_per_category_path(bm.category.id)
+              = link_to bm.decade_name, memories_per_decade_path(bm.decade)
+            - else
+              = link_to truncate(bm.category.name.titleize, :length => 15), memories_per_category_path(bm.category.id)
+          .bYName
+            = link_to dyr_title(truncate(bm.name, :length => 26)), memory_path(bm)
+                        
+    -# Something Here
+  #loginMoreOptions
+    Want to get more suggestions like these? 
+    = link_to "Login", new_user_session_path
+    or
+    = link_to "Register", new_user_registration_path
+    

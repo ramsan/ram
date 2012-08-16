@@ -1,0 +1,56 @@
+%div{:id => "showdown_" + showdown.id.to_s}
+  #title= dyr_title(showdown.question)
+  = form_for Vote.new, :remote => true do |f|
+    #showDownForm
+      .showdownOptionWrapper
+        #memory_1.showdownOption
+          .image
+            = image_tag showdown.image_m1.url(:small), :class => "hidden showdownPreview"
+          .option
+            = truncate(showdown.memory_1, :length => 18)
+          = f.radio_button :memory_1, "0", :checked => false
+    
+        #memory_2.showdownOption
+          .image
+            = image_tag showdown.image_m2.url(:small), :class => "hidden showdownPreview"
+          .option
+            = truncate(showdown.memory_2, :length => 18)
+          = f.radio_button :memory_2, "0", :checked => false
+    
+        - if showdown.image_m3.present? && showdown.memory_3.present?
+          #memory_3.showdownOption
+            .image
+              = image_tag showdown.image_m3.url(:small), :class => "hidden showdownPreview"
+            .option
+              = truncate(showdown.memory_3, :length => 18)
+            = f.radio_button :memory_3, "0", :checked => false
+
+        - if showdown.image_m4.present? && showdown.memory_4.present?
+          #memory_4.showdownOption
+            .image
+              = image_tag showdown.image_m4.url(:small), :class => "hidden showdownPreview"
+            .option
+              = truncate(showdown.memory_4, :length => 18)
+            = f.radio_button :memory_4, "0", :checked => false
+      
+        - if showdown.image_m5.present? && showdown.memory_5.present?
+          #memory_5.showdownOption
+            .image
+              = image_tag showdown.image_m5.url(:small), :class => "hidden showdownPreview"
+            .option
+              = truncate(showdown.memory_5, :length => 18)
+            = f.radio_button :memory_5, "0", :checked => false
+        .backgroundOptions
+      #submit_my_vote  
+        = f.hidden_field :user_id, :value => current_user.id if user_signed_in?
+        = f.hidden_field :showdown_id, :value => showdown.id
+        - if user_signed_in?
+          =# f.submit "Vote"
+          = image_submit_tag "showdownVoteButton.png", :id => "voteShowdown", :disabled => true
+        - else 
+          =# link_to "Vote", new_user_session_path, :id => "iAmNotLoggedIn"
+          
+          -## Disabling users login for showdown
+          =# link_to image_tag("showdownVoteButton.png"), new_user_session_path, :id => "iAmNotLoggedIn"
+          = image_submit_tag "showdownVoteButton.png", :id => "voteShowdown", :disabled => true
+        = render :partial => "shared/showdown_countdown"

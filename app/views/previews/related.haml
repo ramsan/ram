@@ -1,0 +1,13 @@
+.preview_related{:id => "preview_related_#{@memory.id}"}
+  - if @memories.count > 0
+    .related_container
+      %p.rememberedExplanation Based up your search, below are related memories which might be similar.  Click on a memory to see more.  
+      .spacer
+      %hr
+      = render :partial => 'related', :collection => @memories, :as => :memory
+      .spacer
+    
+    = link_to "View all related memories (#{@total_related})", memory_path(@memory, :anchor => 'related'), :class => "view_all"
+  - else
+    .no_tab_content
+      No related memories were found.  Please search again to help find what you are looking for.

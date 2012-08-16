@@ -1,0 +1,25 @@
+= content_for :head do
+  = javascript_include_tag 'row_click'
+
+%h2 Create memory
+
+These memories seem to be similar. You may comment or add images to them OR 
+= link_to 'create your own', new_memory_path(:name => URI.escape(@search.params[:term]))
+%br
+%br
+%table
+  %tr
+    %th
+    %th 
+      = sortable 'name'
+    %th 
+      = sortable 'description'
+    %th 
+      Categories
+    %th 
+      = sortable 'created_at', 'Created'
+    %th
+  = render :partial => "shared/memory_row", :collection => @search.results, :as => :m       
+      
+%br
+%br

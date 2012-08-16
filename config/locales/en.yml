@@ -1,0 +1,31 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  action_not_allowed: You do not have permission to perform that action.
+  problem_saving: There was a problem saving your %{obj_type}, please try again.
+  success: The %{obj} was successfully %{action}
+  fail: There was a problem %{action} your %{obj}. Please try again.
+  delete: Are you sure you want to delete this %{obj}?
+  facebook:
+    name: Do you remember %{name}?
+    message: Do You Remember %{name}?  Indulge in this and other memories at DoYouRemember.com an online community connected by common memories.
+    commented: Do You Remember %{name}?  I posted a comment on this memory at DoYouRemember.com an online community connected by common memories.
+  controllers:
+    errors: The following errors occured:<br /><br /> %{errors}
+    memories:
+      create:
+        other_things: Here are some other things you may remember
+    invitations:
+      new:
+        error: Cannot retreive Facebook account info
+      # This is the Facebook site invitation
+      create:
+        # name: Join me on %{site_name}
+        name: Join me on DoYouRemember
+        message: I found this fun site to share and revel in memories of times past - come check it out!
+        description: DoYouRemember is a place to share memories old and new . . .
+        success: Your friends have been invited
+  models:
+    memory:
+      deletion_validation: cannot be deleted - it has user comments

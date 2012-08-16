@@ -1,0 +1,12 @@
+#decade_wrapper
+  #decade_timeline
+    #decade_line
+    -Memory::DECADES.sort.each do |d|
+      -if params[:decade] && (params[:decade].to_i == d[0])
+        =link_to d[1], root_path(:category => params[:category], :decade => d[0]), :id => "decade_#{d[0]}", :class => 'current decade', :data_id => d[0]
+      -else
+        =link_to d[1], root_path(:category => params[:category], :decade => d[0]), :id => "decade_#{d[0]}", :class => 'decade', :data_id => d[0]
+    -if !params[:decade]
+      =link_to "all", '#', :id => 'decade_all', :class => 'current', :data_id => '0'
+    -else
+      =link_to "all", root_path(:category => params[:category]), :id => 'decade_all', :data_id => '0'

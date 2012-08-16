@@ -1,0 +1,44 @@
+#showdownPreviewContent
+  #showdownQuestion
+    %b Question:
+    = showdown.question
+  #showdownCenterContent
+    -# Image of Option 1
+    - if showdown.memory_1.present? && showdown.image_m1.present?
+      .showdownOptionPreview
+        %b Memory 1:
+        .showdownImagePreview
+          = image_tag showdown.image_m1.url(:small), :class => "showdownContentPreview"
+        = showdown.memory_1
+      
+    -# Image of Option 2
+    - if showdown.memory_2.present? && showdown.image_m2.present?
+      .showdownOptionPreview
+        %b Memory 2:
+        .showdownImagePreview
+          = image_tag showdown.image_m2.url(:small), :class => "showdownContentPreview"
+        = showdown.memory_2
+        
+    -# Image of Option 3
+    - if showdown.memory_3.present? && showdown.image_m3.present?
+      .showdownOptionPreview
+        %b Memory 3:
+        .showdownImagePreview
+          = image_tag showdown.image_m3.url(:small), :class => "showdownContentPreview"
+        = showdown.memory_3
+    
+    -# Image of Option 4
+    - if showdown.memory_4.present? && showdown.image_m4.present?
+      .showdownOptionPreview
+        %b Memory 4:
+        .showdownImagePreview
+          = image_tag showdown.image_m4.url(:small), :class => "showdownContentPreview"
+        = showdown.memory_4
+
+    -# Image of Option 5
+    - if showdown.memory_5.present? && showdown.image_m5.present?
+      .showdownOptionPreview
+        %b Memory 5:
+        .showdownImagePreview
+          = image_tag showdown.image_m5.url(:small), :class => "showdownContentPreview"
+        = showdown.memory_5

@@ -1,0 +1,11 @@
+%a.profile_image{:href => users_profile_path(comment.user)}
+  %img{:src => comment.user.profile_image, :title => comment.user.name}
+  %br
+  %i= comment.user.name
+     
+.comment
+  = comment.content
+  %br
+  %b Posted
+  %i= comment.created_at.to_formatted_s(:long_custom)
+%hr  

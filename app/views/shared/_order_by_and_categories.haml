@@ -1,0 +1,10 @@
+.menu_left
+  %span.white Sort by:
+  %a{:id => 'view_most_popular', :href => '#', :class => 'current yellow', :title => 'See what people are talking about'} Trending 
+  -# %a{:id => 'view_latest', :href => '#', :class => 'yellow', :title => 'See what memories have recently been added'} New
+.menu_right
+  %span.white Category:
+  %span.yellow= (@category.nil? ? 'All' : @category.name)
+  %span.yellow [
+  -# %a.blue{:id => 'choose_category', :href => '#'} Choose Category
+  %span.yellow ]

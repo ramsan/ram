@@ -1,0 +1,23 @@
+#memoryBankSliderContainer
+  - if @my_memory_bank
+    - if @my_memory_bank.count >= 1
+      %ul#memoryBankSlider
+        - @my_memory_bank.each_slice(11) do |memory_group|
+          %li.memoryBankSliderSection
+            - memory_group.each do |memory|
+              .memoryBankSlider.ui-widget-content
+                .image
+                  %a{:href => "#{memory_path(memory)}"}
+                    = image_tag(memory.images.first.this_url(:medium), :title => dyr_title(memory.name), :class => "memoryOnMyBank")
+  - else
+    %ul#memoryBankSlider
+      %li.memoryBankSliderSection
+        .memoryBankSlider
+          #memoryBankInfo
+            %h5 Drag memories here to fill your memory bank.
+            .extraInfo 
+              Go to your 
+              \ 
+              = link_to "Memory Bank", memory_bank_path
+              \ 
+              to see all of your saved memories.

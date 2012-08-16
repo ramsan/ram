@@ -1,0 +1,29 @@
+- if !m.suspended? || m.suspended?  && current_user.try(:admin)
+  - if m.images.size >= 1 && m.user_images.count > 0
+    - cache m.id do
+      %a{:href => memory_path(m)}
+        .memory_box.memory_list_item{:id => "memory_#{m.id}", :class => "memory_#{m.id} addToMyMemoryBank #{cycle("white", "grey")}"}
+          %a.memory_link{:href => memory_path(m), :class => "#{'preview_name_short' if m.name.length > 35}"}
+            %img.preview{:src => m.user_images.first.this_url(:mosaic), :alt => m.name, :title => m.name}
+            %p.memory_name=m.name
+          .memory_tag= link_to dyr_categories_title(m.category.name), memories_per_category_path(m.category)  if !m.category.nil?
+          .memory_user= link_to m.user.name, users_profile_path(m.user)
+          .follow_memory_user
+            - if m.is_anonymous || (current_user && m.user.eql?(current_user))
+              \
+            - elsif current_user && current_user.followees.include?(m.user)
+              = link_to "Unfollow", unfollow_preview_path(m.user, :list => true), :remote => true, :class => "following_#{m.user.id if m.user}", :title => 'Following this user. Click to unfollow.'
+            - else
+              -# .is_following.grey.pointer{:title => 'You are not following this user.  Click to follow.', :class => "not-following_#{m.user.id if m.user}", :list => true}
+              .is_following.grey.pointer
+                = link_to "Follow", follow_preview_path(m.user, :list => true), :remote => true, :class => "not-following_#{m.user.id if m.user}", :title => 'You are not following this user.  Click to follow.'
+                -# {:title => 'You are not following this user.  Click to follow.', :class => "not-following_#{m.user.id if m.user}", :list => true}
+          .memory_comments= m.comments_count
+          .memory_created_at= m.created_at.to_formatted_s(:list_view)
+
+          .memory_full_lightbox
+            //full screen gray overlay
+            #memory_full
+            //memory div loads in here
+            %a.close &times;
+            //close lightbox

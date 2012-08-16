@@ -1,0 +1,9 @@
+.comment
+  %a.img_profile{:href => users_profile_path(comment.user)}
+    %img{:src => comment.user.my_profile_image}
+  .comment_data
+    %a.name{:href => users_profile_path(comment.user)}
+      = comment.user.name
+    .comment_txt
+      = truncate(comment.caption, :length => 80, :separator => ' ')
+  .spacer

@@ -1,0 +1,141 @@
+oldnav ul li {
+ // border-left: transparent url(<%= asset_path 'nav-left-border.png' %>) no-repeat;
+ background: transparent url(<%= asset_path 'nav-left-border.png' %>) repeat-y 0 0;
+ background-position:right;
+}
+
+.first_row{
+	background: transparent url(<%= asset_path 'bg_row1_header.png' %>) repeat-x 0 0;
+}
+
+li.ui-state-default .ui-icon.custom-ui-icon-comments,
+.ui-state-disabled .ui-icon.custom-ui-icon-comments,
+.ui-state-active .ui-icon.custom-ui-icon-comments {
+    background-position: 0 0;
+    background-image: url(<%= asset_path 'small_comments.png' %>);
+    margin-top: 7px;
+}
+
+li.ui-state-default .ui-icon.custom-ui-icon-related,
+.ui-state-active .ui-icon.custom-ui-icon-related,
+.ui-state-disabled .ui-icon.custom-ui-icon-related  {
+    background-position: 0 0;
+    background-image: url(<%= asset_path 'related.png' %>);
+    margin-top: 7px;
+}
+
+li.ui-state-default .ui-icon.custom-ui-icon-lightbulb,
+.ui-state-active .ui-icon.custom-ui-icon-lightbulb,
+.ui-state-disabled .ui-icon.custom-ui-icon-lightbulb {
+    background-position: 0 0;
+    background-image: url(<%= asset_path 'small_remembers.png' %>);
+    margin-top: 7px;
+}
+
+li.ui-state-default .ui-icon.custom-ui-icon-more_photos,
+.ui-state-active .ui-icon.custom-ui-icon-more_photos,
+.ui-state-disabled .ui-icon.custom-ui-icon-more_photos {
+    background-position: 0 0;
+    background-image: url(<%= asset_path 'more_photos.png' %>);
+    margin-top: 7px;
+}
+
+/* Memory */
+.accordion_btn.open{
+	background: #333 url(<%= asset_path 'yellow_open_triangle.png' %>) no-repeat 10px center;
+	padding: 5px 20px 5px 50px;
+}
+
+.accordion_btn{
+	background: #333 url(<%= asset_path 'orange_close_triangle.png' %>) no-repeat 10px center;
+	padding: 5px 20px 5px 50px;
+}
+
+.upload_left{
+	padding: 30px 20px;
+	border: 1px solid #999;
+	width: 172px;
+	height: 135px;
+	background: #fff url(<%= asset_path 'bg_camera_medium.png' %>) no-repeat center center;
+}
+
+.upload_images_form .box{
+	background: #fff url(<%= asset_path 'bg_camera_big.png' %>) no-repeat center center;
+}
+
+.step1_img{
+	background: transparent url(<%= asset_path 'step_1.png' %>) no-repeat center center;
+}
+
+.step2_img{
+	background: transparent url(<%= asset_path 'step_2.png' %>) no-repeat center center;
+}
+
+.step3_img{
+	background: transparent url(<%= asset_path 'step_3.png' %>) no-repeat center center;
+}
+
+.search_cont input[type="submit"]{
+	background: #CCCCCC url(<%= asset_path 'search_ico_btn.png' %>) no-repeat center center;
+}
+
+.search_header input[type="submit"]{
+	background: #FFFFFF url(<%= asset_path 'search_ico_header.png' %>) no-repeat center center;
+}
+
+#header #do-you-remember-search-memories #search_memories input[id="search_btn"] {
+  background: #FFFFFF url(<%= asset_path 'big-search-icon.png' %>) no-repeat center center;
+  background-size: 18px 18px;
+  height: 26px !important;
+}
+
+.add_memory_header input[type="submit"]{
+	background: #FFFFFF url(<%= asset_path 'submit-memory-btn.png' %>) no-repeat center center;
+	background-size: 20px 18px;
+  height: 26px !important;
+}
+
+.user_menu span.ico_btn{
+  color: #999999;
+  font-size:18px;
+  font-weight:900;
+  background: transparent url(<%= asset_path 'close_info_menu.png' %>) no-repeat right 2px;
+  -webkit-transition: all .2s ease-in-out;
+  -moz-transition: all .2s ease-out;
+  -ms-transition: all .2s ease-in-out;
+  -o-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
+}
+
+.user_menu.open_user_arrow span.ico_btn{
+  background: transparent url(<%= asset_path 'open_info_menu.png' %>) no-repeat right 2px;
+}
+
+.user-actions .bcomments-count {
+  background: transparent url(<%= asset_path 'user-actions-comments.png' %>) no-repeat -1px -5px;
+}
+
+.user-actions .i-do-remember {
+  background: transparent url(<%= asset_path 'user-actions-remembers.png' %>) no-repeat -1px -5px;
+}
+
+.user-actions .i-dont-remember {
+  background: transparent url(<%= asset_path 'user-actions-dont-remember.png' %>) no-repeat -1px -5px;
+}
+
+.user-actions .buser-photos {
+  background: transparent url(<%= asset_path 'user-actions-photos.png' %>) no-repeat -1px -5px;
+}
+
+.memory_box .user-actions .brelatedPhotos {
+  background: transparent url(<%= asset_path 'user-actions-related.png' %>) no-repeat -1px -5px;
+}
+
+
+// .memory_box .user-actions .more {
+//   background: transparent url(<%= asset_path 'user-actions-view.png' %>) no-repeat -1px -5px;
+// }
+// 
+// .memory_box .user-actions .close {
+//   background: transparent url(<%= asset_path 'user-actions-close.png' %>) no-repeat -1px -5px;
+// }

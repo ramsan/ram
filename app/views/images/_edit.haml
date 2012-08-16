@@ -1,0 +1,27 @@
+.user_row2
+  .memory-preview-data
+    #newMemoryComment
+      .right
+        #memories_form
+          = form_for @images, :remote => true, :html => {:multipart => true} do |f|
+            / %h2 Add comment Add Comment and/or a Photo if you want!
+            %input{:type => 'hidden', :name => :as_comment, :value => true}
+            %input{:type => 'hidden', :name => 'images[user_id]', :value => current_user.id.to_s}
+            %input{:type => 'hidden', :name => 'images[memory_id]', :value => @images.memory_id.to_s}
+            %input.google_page_url{:type => 'hidden', :name => 'images[google_page_url]', :value => @images.google_page_url.to_s}
+            %input.google_thumb{:type => 'hidden', :name => 'images[google_thumb]', :value => @images.google_thumb.to_s}
+            %input.google_main{:type => 'hidden', :name => 'images[google_main]', :value => @images.google_main.to_s}
+            %input.external_url{:type => 'hidden', :name => 'images[external_url]', :value => @images.external_url.to_s}
+
+            .commentDetails
+              = image_tag (current_user.my_profile_image)
+              %textarea#newUserComment{:name => 'images[caption]', :title => 'Photo caption', :spellcheck => true, :rows => 1, :cols => 64, :placeholder => "Write your comment here"}
+                = @images.caption.to_s
+            .spacer
+            .newCommentButtons
+              .fileinputs
+                .fakefile
+              .google_search
+                %br
+                = f.submit 'Post', :id => "postNewComment"#, :class => "mySubmitButton",
+

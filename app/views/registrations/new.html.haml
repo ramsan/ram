@@ -1,0 +1,80 @@
+#signInUpBox.newAccount
+  #xGoBack= link_to "X", root_path, :id => "Cancel"
+  #withOptions.hidden 
+    #DYRlogo
+      = image_tag "doYouRememberSmallLogo.png", :title => "Do Your Remember?"
+    .loginUsingSocialNetworks.signingUp
+      .info Sign Up with a choice below.
+      = link_to image_tag("facebook_signup_bar.png", :title => "Login Using Your Facebook Account"), '/auth/facebook', :class => "social andEmail"
+      = link_to image_tag("twitter_signup_bar.png", :title => "Login Using Your Twitter Account"), '/auth/twitter', :class => "social andEmail"
+      = link_to image_tag("email_signup_bar.png", :title => "Login Using Your Email"), "#", :class => "social andEmail", :id => "with_email"
+  #manually
+    .loginUsingSocialNetworks.signingUp
+      .info 
+        Sign Up with 
+        - unless session[:omniauth].present? == true
+          Email.
+        - else
+          = session[:omniauth][:provider].capitalize
+      = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+        =# devise_error_messages!
+        = render :partial => 'sign_up_fields', :locals => {:f => f}
+        -# user.services.build(:provider => provider, :uid => uid, :uname => name, :uemail => email)
+
+        - if session[:omniauth]
+          - resource.services.build
+          = f.fields_for :services do |builder|
+            = builder.hidden_field :provider, :value => session[:omniauth][:provider]
+            = builder.hidden_field :uid, :value => session[:omniauth][:uid]
+            = builder.hidden_field :uname, :value => session[:omniauth][:info][:name]
+        = f.submit "Create Account"
+    
+%h1 Grateful Dead, Haight Ashbury Circa 1968  
+
+
+
+
+-#.content_divs
+  .content_div
+    .empty
+      %h2.title.light_yellow REGISTER
+      #remote
+        =# render :partial => 'devise/services' 
+        -# %h3 Sign up using one of your existing accounts
+        
+        -# %pre= session[:omniauth].to_yaml
+        
+        - if session[:omniauth]
+          %h2 Please complete these fields:
+        - else
+          %h2 Sign up with #{CONFIG[:app_name]} directly
+        
+        = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+          = devise_error_messages!
+          = render :partial => 'fields', :locals => {:f => f}
+          -# user.services.build(:provider => provider, :uid => uid, :uname => name, :uemail => email)
+          
+          - if session[:omniauth]
+            - resource.services.build
+            = f.fields_for :services do |builder|
+              = builder.hidden_field :provider, :value => session[:omniauth][:provider]
+              = builder.hidden_field :uid, :value => session[:omniauth][:uid]
+              = builder.hidden_field :uname, :value => session[:omniauth][:info][:name]
+          %p.buttons= f.submit "Sign up"
+          .spacer
+        = render :partial => "devise/shared/links"
+        
+-#
+  %h3 Sign up using one of your existing accounts
+  
+  #remote
+    = render :partial => 'devise/services' 
+  
+  %h2 Sign up with #{CONFIG[:app_name]} directly
+  
+  = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+    = devise_error_messages!
+    = render :partial => 'fields', :locals => {:f => f}
+    %p.buttons= f.submit "Sign up"
+    .spacer
+  = render :partial => "devise/shared/links"

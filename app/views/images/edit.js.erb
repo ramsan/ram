@@ -1,0 +1,2 @@
+$('#userCommentedIn_<%= @images.id %>').html("99999");
+$('#userCommentedIn_<%= @images.id %>').html("<%= escape_javascript(render :partial => 'edit') %>");

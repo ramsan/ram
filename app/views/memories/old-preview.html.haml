@@ -1,0 +1,118 @@
+- if m.user_images.count > 0
+  .memory_box{:id => "memory_#{m.id}", :class => "memory_#{m.id} #{cycle('', '', '3col')}"}
+    .cont_memory
+      -# Follow Blue Button
+      - if m.is_anonymous || (current_user && m.user.eql?(current_user))
+        \
+      - elsif current_user && current_user.followees.include?(m.user)
+        .is_following.green.pointer{:title => 'Following this user. Click to unfollow.', :class => "following_#{m.user.id}"}
+      - else
+        .is_following.grey.pointer{:title => 'You are not following this user.  Click to follow.', :class => "not-following_#{m.user.id}"}
+      -# Remember Green Button
+      - if current_user && !m.user.eql?(current_user)
+        .iRememberedThis 
+          - if current_user.also_remembers.include?(m)
+            %a{:href => "#{forgot_preview_path(m.id)}", :class => "remember_big_btn", 'data-remote' => true}
+              %img{:src => "#{asset_path 'remembers_small_normal.png'}", :border => 0, :title => 'I Remember. Click to forget.'}
+          - else
+            %a{:href => "#{also_remembers_preview_path(m.id)}", :class => "remember_big_btn", 'data-remote' => true}
+              %img{:src => "#{asset_path 'remembers_small_grey.png'}", :size => "15x15", :border => 0, :title => 'If Do You Remember. Click to Remember.'}
+      .usersStats
+        .usersFollowing
+          =# link_to pluralize(m.user.followers.count, 'User') + " following.", memory_path(m)
+          = pluralize(m.user.followers.count, "Follower")
+        %div.iRememberThis
+          =# link_to pluralize(m.remembered_by.count, 'User') + " remembers.", memory_path(m)
+          = pluralize(m.remembered_by.count, "Remember")
+      .memory_preview
+        %a.memory_link{:href => memory_path(m)}
+          .img
+            - if m.images.count > 0
+              %img.preview{:src => m.user_images.first.this_url(:medium), :display => "none"}
+        -#.memory_buttons
+          - if current_user && !m.user.eql?(current_user) 
+            - if current_user.also_remembers.include?(m)
+              %a{:href => "#{forgot_preview_path(m.id)}", :class => "remember_big_btn", 'data-remote' => true}
+                %img{:src => "#{asset_path 'remembers_big_normal.png'}", :border => 0}
+                %span 
+                  Remembered
+            - else
+              %a{:href => "#{also_remembers_preview_path(m.id)}", :class => "remember_big_btn", 'data-remote' => true}
+                %img{:src => "#{asset_path 'remembers_big_grey.png'}", :border => 0}
+                %span 
+                  Remember
+          -#%a{:href => "#", :class => "comment_big_btn"}
+            %img{:src => "#{asset_path 'comment_big_grey.png'}", :border => 0}
+            %span 
+              Comment
+      -if current_user && m.user.eql?(current_user) && m.can_delete?   
+        .remove{:title => 'Delete this memory', 'data-memory-id' => m.id}
+          x
+      .data
+        .posted_by
+          .cont_name
+            -#%span.light_grey.small By:
+            %span
+              -if m.is_anonymous
+                Anonymous
+              -else 
+                = link_to m.user.name, users_profile_path(m.user.id), :class => "name med_grey small"
+            .memory_title{:class => "name small dark"}
+              - if m.decade_name
+                = link_to "#{truncate(m.category.name.titleize, :length => 10)}", memories_per_category_path(m.category.id), :class => "dark"
+                = link_to m.decade_name, memories_per_decade_path(m.decade)
+              - else 
+                = link_to "#{truncate(m.category.name.titleize, :length => 15)}", memories_per_category_path(m.category.id), :class => "dark"
+              =# truncate(m.category.name.titleize, :length => 40)
+   
+        %a{:href => memory_path(m)}
+          .text.preview_title
+            = dyr_title(truncate(m.name, :length => 40))
+    .memoryMoreOptionsContainer 
+      - if !m.sale_link.nil? && m.sale_link.length >= 7
+        .saleMemoryLink
+          = link_to "Buy It", m.sale_link, :target => "_blank"
+      - if !m.description.empty?
+        .readMore
+          = link_to "Read More", memory_path(m)
+    -#.user-actions
+      .bcomments-count
+        = m.comments.count
+      - if current_user && !m.user.eql?(current_user) && current_user.also_remembers.include?(m)
+        .bi-remembers{:class => " i-do-remember"}
+          = m.remembered_by.count
+      - else
+        .bi-remembers{:class => " i-dont-remember"}
+          = m.remembered_by.count
+      .buser-photos
+        = m.images.count
+      .brelatedPhotos
+        = m.related_memories_count ||= "0"
+      .bmore MORE
+      .tab_box
+        #tabs-icons.tabs
+          %ul
+            %li
+              %a{ :href => "#{comments_preview_path(m)}", :name => "tabs-icons" }
+                %span.ui-icon.custom-ui-icon-comments
+                COMMENTS
+                %span.spinner
+                  &nbsp;
+            %li
+              %a{ :href => "#{remembered_preview_path(m)}", :name => "tabs-icons" }
+                %span.ui-icon.custom-ui-icon-lightbulb 
+                REMEMBER
+                %span.spinner
+                  &nbsp;
+            %li
+              %a{ :href => "#{photos_preview_path(m)}", :name => "tabs-icons" }
+                %span.ui-icon.custom-ui-icon-more_photos 
+                PHOTOS
+                %span.spinner
+                  &nbsp;
+            %li
+              %a{ :href => "#{related_preview_path(m)}", :name => "tabs-icons" }
+                %span.ui-icon.custom-ui-icon-related
+                RELATED
+                %span.spinner
+                  &nbsp;

@@ -1,0 +1,25 @@
+- highlight_terms = !@search.nil? && @search.params.has_key?(:term) && !@search.params[:term].blank?
+%tr{:class => cycle('odd','even'), :id => 'memory-' + m.to_param}
+  %td.img
+    - if m.images.count > 0
+      %img{:src => m.images.first.this_url(:thumb)}
+  %td.name
+    - if highlight_terms
+      = link_to highlight(m.name, @search.term_filtered), memory_path(m)
+    - else
+      = link_to m.name, memory_path(m)
+    - if current_user && current_user.eql?(m.user)
+      = link_to 'Edit', edit_memory_path(m)
+  %td.description
+    - if highlight_terms
+      = highlight(m.description[0..45], @search.term_filtered)
+    - else
+      = m.description[0..45]
+    - if m.description.length > 45
+      \...
+      %br
+      = link_to('more', memory_path(m))
+    .spacer
+  %td.categories=raw m.categories.sort.collect(&:name).join('<br />')
+  %td.created= m.created_at.strftime("%B %e, %Y")
+  %td.more= button_to 'more', memory_path(m), :method => :get

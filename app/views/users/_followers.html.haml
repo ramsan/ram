@@ -1,0 +1,18 @@
+.profile_following
+  .col1
+    %a{:href => users_profile_path(followers)}
+      .img_profile_memory
+        %img{:src => followers.my_profile_image}
+  .col2
+    %a{:href => users_profile_path(followers)}
+      %span.blue.big
+        = followers.name
+    - if current_user && !current_user.eql?(followers) 
+      - if !current_user.followees.include?(followers)
+        %a{:href => users_follow_from_profile_followers_path(followers), 'data-remote' => true, :class => "not-following_#{followers.id}"}
+          .btn.yellow.small
+            follow
+      - else
+        %a{:href => users_unfollow_from_profile_followers_path(followers), 'data-remote' => true, :class => "following_#{followers.id}"}
+          .btn.orange.small
+            unfollow

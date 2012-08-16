@@ -1,0 +1,7 @@
+.related
+  .related_row
+    %a.img{:href => memory_path(memory)}
+      .img_memory_related
+        %img{:src => memory.user_images.first.this_url(:small), :border => 0}
+    .name
+      = link_to truncate(memory.name, :length => 32), memory_path(memory), :class => "memory_name"

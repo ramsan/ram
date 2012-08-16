@@ -1,0 +1,32 @@
+- cache memory do 
+  .profile_memory
+    .col1
+      %a{:href => memory_path(memory)}
+        .img_memory_profile
+          - if memory.main_image
+            = image_tag memory.main_image.this_url(:thumb)
+          - else
+            = image_tag Image.default_memory
+    .col2
+      %a{:href => memory_path(memory)}
+        %span.name.blue.normal.fw
+          = memory.name
+      .r1.count_icons
+        .c1
+          %span
+            %img{:src => "#{asset_path 'comments_profile.png'}", :border => 0}  
+          %span.orange
+            = memory.comments.count
+        .c2
+          %span.grey
+            = memory.remembered_by.count
+          %span
+            %img{:src => "#{asset_path 'remembers_big_normal.png'}", :border => 0}
+      
+      .r2
+        - if !memory.category.nil?
+          %a{:href => memories_per_category_path(memory.category)}
+            = memory.category.name
+        - if !memory.decade.nil?
+          %a{:href => memories_per_decade_path(memory.decade)}
+            = memory.decade_name

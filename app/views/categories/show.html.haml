@@ -1,0 +1,17 @@
+.adminCategories
+
+  %h1 
+    = @category.name 
+    %br/
+    %i
+      Memories on this category
+      (
+      = @category.memories.size
+      )
+    
+  .links
+    = link_to 'Go Back', categories_path
+  = image_tag @category.header.url
+  .links
+    = link_to 'Edit', edit_category_path(@category)
+    =# link_to 'Delete', showdown, :confirm => 'Are you sure?', :method => :delete

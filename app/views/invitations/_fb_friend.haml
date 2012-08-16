@@ -1,0 +1,3 @@
+.fb_friend{:class => "col#{column_div_number(3, @fb_friends.count, fb_friend_counter + 1, 'vertical')}"}
+  = check_box_tag 'fb_friends[]', fb_friend.identifier
+  #{fb_friend.name}

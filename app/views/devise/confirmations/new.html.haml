@@ -1,0 +1,16 @@
+#signInUpBox.newAccount
+  #xGoBack= link_to "X", root_path, :id => "Cancel"
+  #DYRlogo
+    = image_tag "doYouRememberSmallLogo.png", :title => "Do Your Remember?"
+  .loginUsingSocialNetworks.signingUp
+    .info Resend confirmation instructions
+      
+    #manually
+      .loginUsingSocialNetworks.signingUp
+        = form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post }) do |f|
+        
+          .field= f.email_field :email, :placeholder => "Write your email here"
+  
+          = f.submit "Resend confirmation instructions"
+  
+        =# render :partial => "devise/shared/links"

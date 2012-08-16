@@ -1,0 +1,70 @@
+!!! 5
+%html
+  %head
+    %meta{:charset => "utf-8"}
+    %meta{:content => "IE=edge,chrome=1", "http-equiv" => "X-UA-Compatible"}
+    %title
+      DoYouRemember? 
+      = content_for :title
+    = stylesheet_link_tag "application", "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/base/jquery-ui.css"
+    = javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js'
+    = javascript_include_tag "application", "add_button", "jquery.anythingslider.min", "memory_grid_masonry", "memory_show","jquery.masonry.min", "jquery.placeholder", "jquery.infinitescroll.min"
+    = content_for :head
+    =# stylesheet_link_tag "anythingslider.css"
+    =# javascript_include_tag "jquery.easing.1.2"#, "jquery.carouFredSel-5.2.3-packed", "jquery.anythingslider.min", "anythingslider.fx.min", "slider"
+    %meta{:name => "apple-mobile-web-app-capable", :content => "yes"}
+    %meta{ :name => "viewport", :content => "width=device-width, initial-scale=0.78"  }/
+    / %meta{:content => "width=device-width", :name => "viewport"}/
+    = favicon_link_tag
+    = csrf_meta_tags
+    %script{:type => 'text/javascript'}
+      var current_user = #{!current_user.nil?};
+    /[if lt IE 9]
+      = javascript_include_tag "html5shiv"
+    %script{:type => "text/javascript", :src => "http://w.sharethis.com/button/buttons.js"}
+    %script{:type => "text/javascript"}
+      stLight.options({publisher: "ur-1dc63ca3-3710-5df8-3253-e946e605d667"});
+    
+  %body{:id => "#{@body_id}"}
+    = render 'shared/loading_animation'
+    = render 'shared/header'
+    #wrapper_content
+      #main_content
+        - if notice
+          .notice.grey_box=raw notice
+        - if alert
+          .alert.grey_box=raw alert  
+        
+        = yield
+      .spacer
+      #wrapper_footer
+        -# disabled memory bank
+        =# render 'shared/footer'
+
+        -#.search_cont{:style => "display:none"}
+          = form_tag search_result_path do
+            = text_field_tag 'search[term]', '', :placeholder => 'Enter your search here', :maxlength => 60
+            = submit_tag ''
+            %span.advanced_search Advanced search:
+            = select_tag 'search[category_ids][]', options_for_select('Categories' => '') + options_from_collection_for_select(Category.all, 'id', 'name')
+            = select_tag 'search[decade_id]', options_for_select('Decades' => '') + options_for_select(Memory::DECADES.sort.each(&:reverse!))
+            %span.close_search x
+            
+      - if Rails.env.eql?('production')
+        :javascript
+          var uvOptions = {};
+          (function() {
+            var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
+            uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/upmFdcsfK6XcFnilBSq7fQ.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+          })();
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-31381947-1']);
+          _gaq.push(['_setDomainName', 'doyouremember.com']);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();

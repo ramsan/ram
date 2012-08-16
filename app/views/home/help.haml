@@ -1,0 +1,75 @@
+.site_info
+  #sidebar
+    =render"more_sidebar"
+  #content
+    %a{:name => 'top'}
+    %h1
+      Help
+    %h3
+      Welcome to the DoYouRemember Help Center!
+      %br  
+      Here are our help topics: 
+    %ul.help_topics
+      %li
+        %a{:href => '#register'} Login
+      %li
+        %a{:href => '#view'} View a memory
+      %li
+        %a{:href => '#follow'} Follow a member
+      %li
+        %a{:href => '#remember'} "Remember" a Memory
+      %li
+        %a{:href => '#comment'} Comment on a memory
+      %li
+        %a{:href => '#submit'} Submit a memory
+      %li
+        %a{:href => '#search'} Search a memory
+      %li
+        %a{:href => '#share'} Share a memory
+
+    %a{:name => 'register'}
+    %h3 Login
+    %p You will have to register to Add a Memory, to add a comment on a memory or play a game on the site.  Login button is on the top right of the site.
+    %a.return{:href => '#top'} return to top
+    
+    %a{:name => 'view'}
+    %h3 View a Memory
+    %p You can filter all memories by Cateogry/Decade, see All memories posted on the site, view those which are Trending, and if you are logged in you can view memories you have added or saved in your Memory Bank, or see those we suggest you might remember.   All of these are found at the top of the site on the black and white navigation bar.
+    %p Each memory is featured in its own “Polaroid” image box on the site and includes a picture a memory title, the name of the member who submitted the memory.  Clicking the image gets you more.
+    %a.return{:href => '#top'} return to top
+    
+    %a{:name => 'follow'}
+    %h3 Follow a Member
+    %p Light up the circle next to the name of the person who posted the memory to follow them.   You can also click on the person’s name to be brought to a page that lists the member’s submitted memories, along with other items.
+    %a.return{:href => '#top'} return to top
+    
+    %a{:name => 'remember'}
+    %h3 "Remember" a Memory
+    %p To remember a memory, illuminate the green “check” in the circle at the bottom right of every memory.   You can also open the Memory Bank tab at the bottom of the page and drag memories in to this box.  Memories “remembered” will appear in your Memory Bank.
+    %a.return{:href => '#top'} return to top
+
+    %a{:name => 'comment'}
+    %h3 Comment on a Memory
+    %p When you find a memory that in some way touches you, feel free to share your comments, and even add an image (or two) by clicking on the Comment button at the bottom of each image.
+    %a.return{:href => '#top'} return to top
+
+    %a{:name => 'submit'}
+    %h3 Submit a Memory
+    %p You need to be a registered member who has logged-in in order to submit a memory.  Enter the memory in the Search/Submit box at the top of the site, and select the [+] to add a memory.
+    %p In addition to a title of your memory, you can write as long of a story describing your memory and you can attach as many images as you’d like or even a video. 
+
+    %p Clicking the Anonymous button keeps your name off the memory (note:  your anonymous posted memories will appear on your profile page for you to see, no one will be able to follow your anonymous identity).
+    %a.return{:href => '#top'} return to top
+
+    %a{:name => 'search'}
+    %h3 Search a Memory
+    %p You can use the site to search memories without logging in.  Searches are conducted based upon memory titles, so the quality of a search will rest on the quality of the memory titling, and how it was submitted.    
+    %a.return{:href => '#top'} return to top
+
+    %a{:name => 'share'}
+    %h3 Share a Memory
+    %p We’re of the opinion that nothing’s more viral than a shared memory. It’s easy to share your memory with your friends and family through DoYouRemember.com. 
+    %p If you are submitting a memory, or if you come upon another member’s memory that somehow resonates, simply click on the image and a sharing box will appear. We’ll help you get the memory distributed, and also invite your friend to visit the site. 
+    %p Any member who is following you will automatically be notified when you submit a new memory or comment on an existing one.
+    %a.return{:href => '#top'} return to top
+/ Eventually this should all have to be implemented with a "help" controller, but that is beyond the scope of today's work.

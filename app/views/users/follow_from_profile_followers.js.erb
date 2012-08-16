@@ -1,0 +1,8 @@
+var nodes = $('.not-following_<%= @followee.id%>');
+var inner_divs = nodes.find('.btn.yellow.small');
+inner_divs.text('unfollow');
+inner_divs.removeClass('yellow');
+inner_divs.addClass('orange');
+nodes.addClass('following_<%= @followee.id%>');
+nodes.removeClass('not-following_<%= @followee.id%>');
+nodes.attr('href', '<%= users_unfollow_from_profile_followers_path(@followee) %>');

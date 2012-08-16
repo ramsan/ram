@@ -1,0 +1,118 @@
+= content_for :head do
+  :javascript
+    $(document).ready(function(){
+    
+      $('.profile .col1 img').each(function(){  
+        this.src = this.src}).load(function(){
+        processImage($(this), 42, 42, 'relative');
+      });
+      
+      $('.img_memory_profile img').each(function(){  
+        this.src = this.src}).load(function(){
+        processImage($(this), 42, 42);
+      });
+      
+    });
+    
+.profile
+  .col1
+    .img
+      %img{:src => @user.my_profile_image}
+  .col2
+    .data
+      %h2= @user.name
+      %b
+        Memories:
+      = @user.public_memories.count
+      %b
+        Followers:
+      = @user.followers.count
+    -#.Profiles
+      - if !@user.eql?(current_user)
+        #followUser
+          - if current_user && current_user.followees.include?(@user)
+            = link_to "Following: #{@user.name}", users_unfollow_path(@user), :title => 'Un-follow', :remote => true
+            &nbsp;
+            %span
+              = link_to 'x', users_unfollow_path(@user), :title => 'Un-follow', :remote => true, :class => 'unfollow remove'
+          - else
+            -#.yellow
+            = button_to 'Follow: ' + @user.name, users_follow_path(:followee_id => @user.id), :remote => true
+  .links
+    - if current_user && !current_user.eql?(@user)
+      #followUser
+        - if current_user.followees.include?(@user)
+          = link_to "Following #{@user.name}", users_unfollow_path(@user), :remote => true
+          -#%a{:href => users_unfollow_path(@user), :remote => true}
+            Following #{@user.name}
+          &nbsp;
+          %span 
+            = link_to 'x', users_unfollow_path(@user), :title => 'Un-follow', :remote => true, :class => 'unfollow'
+        - else
+          = button_to 'Follow: ' + @user.name, users_follow_path(:followee_id => @user.id), :remote => true
+    -# elsif !current_user
+      = link_to 'Sign in', new_user_session_path 
+      to follow this user     
+    .spacer
+
+
+- if @user.public_memories.count > 0    
+  .add_comment_row
+    .accordion_btn
+      %span.title
+        = @user.name
+        Submitted Memories
+        %span.yellow.normal.big.count_icon
+          [+]
+        %span.count_icon
+          = @user.public_memories.count
+    .accordeon_cont.memories{ :style => "display:none"}        
+      .content_box
+        .memories_list
+          = render :partial => 'memories/preview', :as => :m , :collection => @user.public_memories
+          .spacer     
+
+- if @user.also_remembers.count > 0
+  .add_comment_row
+    .accordion_btn
+      %span.title
+        Things
+        = @user.name
+        also remembers
+        %img.ico{:src => "#{asset_path 'remembers_big_normal.png'}", :border => 0}
+        %span.count_icon
+          = @user.also_remembers.count   
+    .accordeon_cont.memories{ :style => "display:none"}        
+      .content_box
+        .memories_list
+          = render :partial => 'memories/preview', :as => :m , :collection => @user.also_remembers
+          .spacer   
+
+- if @user.followers.count > 0
+  .add_comment_row
+    .accordion_btn
+      %span.title
+        People Who Are Following
+        = @user.name
+        %span.count_icon
+          = @user.followers.count   
+    .accordeon_cont.memories{ :style => "display:none"}        
+      .content_box
+        .memories_list
+          = render :partial => 'following', :collection => @user.followers || 'No one is following ' + @user.name
+          .spacer   
+
+- if @user.followees.count > 0
+  .add_comment_row
+    .accordion_btn
+      %span.title
+        People  
+        = @user.name
+        is Following
+        %span.count_icon
+          = @user.followees.count   
+    .accordeon_cont.memories{ :style => "display:none"}        
+      .content_box
+        .memories_list
+          = render :partial => 'following', :collection => @user.followees || 'You are not following anyone'
+          .spacer   

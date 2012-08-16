@@ -1,0 +1,81 @@
+#wrapper_header
+  #header
+    .first_row
+      .cont
+        %a.iso{:href => '/', :title => 'Home'}
+          %img{:src => "#{asset_path 'iso_header.png'}", :border => 0}
+        %a.logo{:href => '/', :title => 'Home'}
+          %img{:src => "#{asset_path 'logo_header.png'}", :border => 0}
+        .search_header
+          = form_tag search_result_path do
+            = text_field_tag 'search[term]', '', :placeholder => 'Enter your search here', :maxlength => 60, :spellcheck => true
+            = submit_tag '', :id => 'search_btn'
+        .add_memory_header
+          = form_tag new_memory_path, :method => :get do
+            = text_field_tag 'name', '', :placeholder => 'Submit a memory', :maxlength => 60, :spellcheck => true
+            = submit_tag '', :id => 'add_memory_btn'
+        .top_header_user
+          %a.btn_header.info{:href => "#", :title => 'Info'}
+            %img{:src => "#{asset_path 'about.png'}", :border => 0}
+          %a.btn_header#submit_memory_lnk{:href => "#{new_memory_path}", :title => 'Submit a memory'}
+            %img{:src => "#{asset_path 'submit.png'}", :title => 'Submit a memory', :border => 0}
+          %a.btn_header{:href => "#{new_invitation_path}", :title => 'Invite friends'}
+            %img{:src => "#{asset_path 'invite.png', :title => 'Invite friends'}", :border => 0}
+            
+          .nav_about_user{:style => 'display:none'}
+            %a{:href => about_path}
+              About
+            %a{:href => terms_of_service_path}
+              Terms of Service
+            %a{:href => privacy_policy_path}
+              Privacy Policy
+            %a{:href => get_our_app_path}
+              Get our App
+              
+        .user_menu
+          - if current_user
+            .cont_user_menu
+              %a{:href => '#'}
+                = image_tag current_user.my_profile_image, :size => '25x25'
+                %span.ico_btn
+                  = current_user.name
+              .nav_user{:style => 'display:none'}
+                .box_nav_user
+                  %span.f
+                    %a.last{:href => users_home_path} My DYR
+                  %span.s
+                    %a.last.right{:href => '/users/sign_out'}= 'Log out' 
+            - else
+              %a.last{:href => login_register_path}= 'Login or Register'
+    -#.second_row
+      .cont
+        %ul#main_menu
+          - if current_user
+            %li.users_home
+              %a.btn.menu{:href => "#{users_home_path}"}
+                %img{:src => "#{asset_path 'iso_btn.png'}", :border => 0}
+                %span MY DYR
+          %li
+            %a.btn.menu{:href => "#", :class => "search_btn"}
+              %img{:src => "#{asset_path 'search_btn.png'}", :border => 0}
+              %span search
+          %li.memories_new
+            %a.btn.menu{:href => "#{new_memory_path}"}
+              %img{:src => "#{asset_path 'submit_btn.png'}", :border => 0}
+              %span submit
+          %li
+            %a.btn.menu{:href => "#"}
+              %img{:src => "#{asset_path 'invite_btn.png'}", :border => 0}
+              %span invite
+          %li
+            %a.btn.menu{:href => "#"}
+              %img{:src => "#{asset_path 'showdown_btn.png'}", :border => 0}
+              %span showdown
+          %li
+            %a.btn.menu{:href => "#"}
+              %img{:src => "#{asset_path 'shop_btn.png'}", :border => 0}
+              %span shop
+          %li
+            %a.btn.menu{:href => "#"}
+              %img{:src => "#{asset_path 'blog_btn.png'}", :border => 0}
+              %span blog

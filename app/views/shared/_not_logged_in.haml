@@ -1,0 +1,31 @@
+#welcome-to-do-you-remember
+  / .remove.hide_welcome_message x
+  / %h1 &nbsp;&nbsp;&nbsp;Welcome to DoYouRemember?... The Social Memories site.
+  / %h2 
+  /   
+  / %p 
+  /   As a guest, you can see what others have posted. 
+  /   %a{:href => login_register_path}="LOGIN" 
+  /   to post your own memories, add comments or photos and create a Memory Bank. 
+  / 
+  / %p
+  /   To save a memory posted by others, “light” the elephant to yellow. To follow users with similar memories, click the circle to blue.
+  / 
+  / %p
+  /   The red “PUSH” button at the bottom of each memory box opens a quick-view of comments, people who also remember that memory, similar items you might remember and more.  
+  / %p  
+  /   If you need further assistance INFO will provide answers to your questions or feel free to email us at info@doyouremember.com.  
+  / %p  
+  /   Please don't forget to send feedback to help us improve DoYouRemember.  Thank you.
+  /   -#%a{:href => "http://www.apple.com/iphone/from-the-app-store/"}= "download our app" + "."
+  .remove.hide_welcome_message x
+  %p 
+    Welcome to DoYouRemember, the site to post & share memories.  Navigate the buttons above to see memories by category, all or trending.  Use the one-step 
+    =# link_to "LOGIN", "/auth/facebook"
+    = link_to "LOGIN", new_user_session_path
+    \ to begin creating your own memories and to see memories we think you might like.  We're in beta, and appreciate feedback.
+    = mail_to "info@doyouremember.com", "<b>CLICK HERE</b>".html_safe, :subject => "Feedback for doyouremember.com", :encode => "javascript"
+    to provide suggestions or just to say hi.
+    %em 
+      = link_to "INFO", help_path
+    \ tab above will provide additional answers if you need them. Thank you. 

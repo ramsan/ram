@@ -1,0 +1,79 @@
+-#%nav
+  %ul
+    %li.categoriesTab{:class => "#{"activeTab" if @current_tab == "category"}"}
+      = link_to("#", :id => "choose_category", @current_tab => "category") do
+        - if @current_tab == "category"
+          .title.on CATEGORY / DECADE
+          - if  !@category.nil? && @category.name.to_s == "you may like"
+            .description.on (select one)
+          - else
+            .description.on= (@category.nil? ? ' (select one)' : truncate(@category.name.titleize, :length => 25))
+        - else
+          .title CATEGORY / DECADE
+          - if  !@category.nil? && @category.name.to_s != "you may like"
+            .description (select one)
+          - else
+            .description= (@category.nil? ? ' (select one)' : truncate(@category.name.titleize, :length => 25))
+    %li.memoriesCounter{:class => "#{"activeTab" if params[:controller] == "home" && params[:action] == "index" }"}
+      = link_to(root_path) do
+        - if params[:controller] == "home" && params[:action] == "index"
+          .title.on 
+            ALL
+            = number_with_delimiter(Memory.count)
+          .description.on memories
+        - else
+          .title 
+            ALL
+            = number_with_delimiter(Memory.count)
+          .description memories
+
+    %li.trendingMemoriesTab{:class => "#{"activeTab" if params[:action] == "trending"}"}
+      = link_to(trending_path) do
+        - if params[:action] == "trending"
+          .title.on
+            TRENDING
+          .description.on
+            memories
+        - else
+          .title
+            TRENDING
+          .description
+            memories
+      / - if params[:controller] == "home"
+      /           = link_to("#", :id => 'view_most_popular', @current_tab => "suggested") do
+      /             .title TRENDING
+      /             .description memories
+      /         - else 
+      /           = link_to(root_path, :id => "view_most_popular", @current_tab => "home") do
+      /             .title TRENDING
+      /             .description memories
+    %li.doYouRememberLogo
+      #doYouRememberTextLogo
+        = link_to image_tag("#{asset_path "do-you-remember-text-logo2.png"}", :title => "Do You Remember", :alt => "Do You Remember"), root_path
+    %li.memoryBank{:class => "#{"activeTab" if params[:controller] == "memories" && params[:action] == "memory_bank"}"}
+      - if user_signed_in? == true
+        = link_to(memory_bank_path) do
+          - if params[:controller] == "memories" && params[:action] == "memory_bank"
+            .title.on MEMORY BANK
+            .description.on your saved memories
+          - else
+            .title MEMORY BANK
+            .description your saved memories
+      - else
+        = link_to(memory_bank_path) do
+          .title.dark MEMORY BANK
+          .description.dark login to access
+    %li.last{:class => "#{"activeTab" if @current_tab == "suggested"}"}
+      - if user_signed_in? == true
+        = link_to(memories_per_similar_demographics_path) do
+          - if @current_tab == "suggested"
+            .title.on SUGGESTED
+            .description.on just for you
+          - else
+            .title SUGGESTED
+            .description just for you
+      - else
+        = link_to(new_user_session_path) do
+          .title.dark SUGGESTED
+          .description.dark login to access
+= render :partial => 'shared/categories_and_decades'

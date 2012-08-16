@@ -1,0 +1,11 @@
+.profile_following
+  .col1
+    %a{:href => users_profile_path(whotofollow)}
+    - if !current_user.followees.include?(whotofollow)
+      %a{:href => users_follow_from_profile_path(whotofollow), 'data-remote' => true, :class => "not-following_#{whotofollow.id}"}
+        .btn.yellow.small
+          follow
+    - else
+      %a{:href => users_unfollow_from_profile_path(whotofollow), 'data-remote' => true, :class => "following_#{whotofollow.id}"}
+        .btn.orange.small
+          unfollow

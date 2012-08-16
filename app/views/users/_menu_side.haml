@@ -1,0 +1,49 @@
+:javascript
+  $(document).ready(function(){
+    $('.menu_user a.inline_display').click(function(e){
+      e.preventDefault();
+      $('.menu_user .user_menu_inline').hide();
+      var target_div = $('#' + $(this).attr('id') + '_div');
+      if(target_div.is(':hidden')){
+        target_div.show();
+      }else{
+        target_div.hide();
+      }
+    });
+  });
+.menu_user
+  %a{:href => users_home_path}
+    = current_user.name
+    %br
+    %img{:src => current_user.my_profile_image}
+  %a{:href => edit_user_registration_path} 
+    Edit profile
+  %br
+  %a.inline_display#user_info{:href => '#'} Member info
+  .user_menu_inline#user_info_div{:style => 'display:none'}
+    Birth year: #{current_user.birth_year}
+    %br
+    Zip code: #{current_user.zip_code}
+    %br
+    Gener: #{current_user.gender}
+    %br
+    &nbsp;
+    %br
+  %a.inline_display#user_stats{:href => '#'} Member stats
+  .user_menu_inline#user_stats_div{:style => 'display:none'}
+    Comments: #{current_user.comments.count}
+    %br
+    Also remember: #{current_user.also_remembers.count}
+    %br
+    &nbsp;
+    %br
+  %a.inline_display#user_about{:href => '#'} About me
+  .user_menu_inline#user_about_div{:style => 'display:none'}
+    #{current_user.about_me}
+    %br
+    &nbsp;
+    %br
+  %br
+  &nbsp;
+  %br
+  

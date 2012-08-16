@@ -1,0 +1,11 @@
+- unless current_user.services.collect(&:provider).include?('facebook')
+  %a{:href => "/auth/facebook"}
+    = image_tag 'facebook_64.png', :alt => "Facebook", :title => 'Facebook', :border => 0, :size => "64x64"
+
+- unless current_user.services.collect(&:provider).include?('twitter')
+  %a{:href => "/auth/twitter"}
+    = image_tag 'twitter_64.png', :alt => "Twitter", :title => 'Twitter', :border => 0, :size => "64x64"
+
+-# unless current_user.services.collect(&:provider).include?('google')    
+  %a{:href => "/auth/google"}
+    = image_tag 'google_64.png', :alt => "Google", :title => 'Google', :border => 0, :size => "64x64"

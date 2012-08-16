@@ -1,0 +1,64 @@
+- unless @slider_memories.count >= 1
+  #spacer
+    %br/
+- else
+  #sliderContainer
+    %ul#memorySlider
+      - @slider_memories.each_slice(8) do |memory1,memory2,memory3,memory4,memory5,memory6,memory7,memory8|
+        %li.memorySliderContainer
+          - if memory1
+            .memorySlider
+              .image
+                %a{:href => "#{memory_path(memory1)}"}
+                  = image_tag(memory1.images.first.this_url(:medium), :title => dyr_title(memory1.name))
+              %div{:class => "caption-bottom"}
+                = link_to truncate(memory1.category.name.titleize, :length => 15), memories_per_category_path(memory1.category)
+          - if memory2
+            .memorySlider
+              .image
+                %a{:href => "#{memory_path(memory2)}"}
+                  = image_tag(memory2.images.first.this_url(:medium), :title => dyr_title(memory2.name))
+              %div{:class => "caption-bottom"}
+                = link_to truncate(memory2.category.name.titleize, :length => 15), memories_per_category_path(memory2.category)
+          - if memory3
+            .memorySlider
+              .image
+                %a{:href => "#{memory_path(memory3)}"}
+                  = image_tag(memory3.images.first.this_url(:medium), :title => dyr_title(memory3.name))
+              %div{:class => "caption-bottom"}
+                = link_to truncate(memory3.category.name.titleize, :length => 15), memories_per_category_path(memory3.category)
+          - if memory4
+            .memorySlider
+              .image
+                %a{:href => "#{memory_path(memory4)}"}
+                  = image_tag(memory4.images.first.this_url(:medium), :title => dyr_title(memory4.name))
+              %div{:class => "caption-bottom"}
+                = link_to truncate(memory4.category.name.titleize, :length => 15), memories_per_category_path(memory4.category)
+          - if memory5
+            .memorySlider
+              .image
+                %a{:href => "#{memory_path(memory5)}"}
+                  = image_tag(memory5.images.first.this_url(:medium), :title => dyr_title(memory5.name))
+              %div{:class => "caption-bottom"}
+                = link_to truncate(memory5.category.name.titleize, :length => 15), memories_per_category_path(memory5.category)
+          - if memory6
+            .memorySlider
+              .image
+                %a{:href => "#{memory_path(memory6)}"}
+                  = image_tag(memory6.images.first.this_url(:medium), :title => dyr_title(memory6.name))
+              %div{:class => "caption-bottom"}
+                = link_to truncate(memory6.category.name.titleize, :length => 15), memories_per_category_path(memory6.category)
+          - if memory7
+            .memorySlider
+              .image
+                %a{:href => "#{memory_path(memory7)}"}
+                  = image_tag(memory7.images.first.this_url(:medium), :title => dyr_title(memory7.name))
+              %div{:class => "caption-bottom"}
+                = link_to truncate(memory7.category.name.titleize, :length => 15), memories_per_category_path(memory7.category)
+          - if memory8
+            .memorySlider
+              .image
+                %a{:href => "#{memory_path(memory8)}"}
+                  = image_tag(memory8.images.first.this_url(:medium), :title => dyr_title(memory8.name))
+              %div{:class => "caption-bottom"}
+                = link_to truncate(memory8.category.name.titleize, :length => 15), memories_per_category_path(memory8.category)

@@ -1,0 +1,64 @@
+#wrapper_header
+  #header
+    #do-you-remember-logo
+      = link_to image_tag("doYouRememberLogo.png"), root_path
+    #header_right
+      %a#search_menu_head.menu_head{:data_id => "search_menu"} 
+        Search
+      %a#view_menu_head.menu_head{:data_id => "view_menu"} 
+        View
+      %a#year_menu_head.menu_head{:data_id => "year_menu"} 
+        Decade
+        %span#year_hook.status_hook
+      %a#tag_menu_head.menu_head{:data_id => "tag_menu"} 
+        Category
+        %span#tag_hook.status_hook
+      - if user_signed_in?
+        = link_to "Add", new_memory_path, :id => "add_menu_head", :data_id => "add_menu" , :class => "menu_head sign_in"
+      - else
+        = link_to "Add", new_user_session_path, :class => "menu_head sign_in"
+      %a#more_menu_head.menu_head{:data_id => "more_menu"} 
+        More
+      - if current_user
+        = link_to image_tag(current_user.my_profile_image), users_home_path, :id => "user_menu_head", :class => "menu_head user_menu_hook", :data_id => "user_menu"
+      - else
+        =link_to 'Sign&nbsp;In'.html_safe, new_user_session_path, :id => "user_menu_head", :class => "menu_head sign_in"
+  - if current_user
+    #user_menu.dropdown_menu
+      #dropdown_caret
+      #user_name_header=current_user.name
+      #user_menu_items
+        - if  current_user.try(:admin?)
+          =link_to "Categories", categories_path, :class => 'user_menu_item admin_menu_item'
+          =link_to "Showdowns", showdowns_path, :class => 'user_menu_item admin_menu_item'
+
+        =link_to "My Account", users_home_path, :class => 'user_menu_item'
+        =link_to "Memory Bank", memory_bank_path, :class => 'user_menu_item'
+        =link_to "Suggested Memories", memories_per_similar_demographics_path, :class => 'user_menu_item'
+        =link_to "Invite Friends", new_invitation_path, :class => 'user_menu_item'
+        =link_to "Who to Follow", whotofollow_index_path, :class => 'user_menu_item'
+        =link_to "Sign Out", '/users/sign_out', :class => 'user_menu_item', :id => 'sign_out_menu_item'
+  #popdown_menus
+    #search_menu.header_menu
+      = form_tag search_result_path do
+        = text_field_tag 'search[term]', '', :placeholder => 'search...', :maxlength => 60, :spellcheck => true
+        = submit_tag "Search", :id => 'search_btn'
+      = button_to "Advanced Search...", :id => 'advanced_search'
+    #view_menu.header_memu
+      = link_to "Mosaic", root_path
+      \| 
+      = link_to "Polaroid", nil
+      \| 
+      = link_to "List", list_view_path
+    #year_menu.header_menu
+      =render "shared/decade_selector"
+    #tag_menu.header_menu
+      =render "shared/tag_selector"
+    -# Add creates a lightbox, not a menu
+    #more_menu.header_menu
+      =link_to 'Blog', "http://blog.doyouremember.com", :class => 'more_menu_item', :target => "blank"
+      =link_to 'About Us', about_path,:class => 'more_menu_item'
+      =link_to 'Contact', contact_us_path,:class => 'more_menu_item'
+      =link_to 'Help', help_path,:class => 'more_menu_item'
+      =link_to 'Legal', terms_of_service_path,:class => 'more_menu_item'
+      =link_to 'Get the App', get_our_app_path,:class => 'more_menu_item'

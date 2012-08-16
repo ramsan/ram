@@ -1,0 +1,6 @@
+.feedBackMemory{:id => "feed-#{feed.id}"}
+  .image
+    = link_to image_tag(feed.user_images.first.this_url(:small)), memory_path(feed)
+  .info
+    = link_to dyr_title(feed.name), memory_path(feed)
+  = link_to_next_page @feeds, "next", :remote => true, :params => {:controller => 'feeds', :action => 'next'}, :param_name => :feed, :class => "feed_counter hidden"

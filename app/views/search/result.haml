@@ -1,0 +1,43 @@
+-#= content_for :head do
+
+-#.search_params
+  %b Term(s): 
+  = @search.params[:term]
+  %br
+  - if @search.params.has_key?(:category_ids) && @search.params[:category_ids].size > 0
+    %b Categories:
+    %br
+    = Category.find(@search.params[:category_ids]).collect{|obj| obj.name}.join(', ') 
+
+-#.grey_box
+  Search term: #{@term}
+  %br
+  %br
+- if @search.results.size > 0
+  #search_results_header
+    Search results for
+    %b= dyr_title(@search.params[:term])
+  
+#search_results_bar.clearfix
+  - if @search.results.size > 0
+    Click one to see more, search again using different terms, or submit this as a new memory.
+    = link_to image_tag("submitNewMemoryFromResults.png"), new_memory_path(:name => URI.escape(@search.params[:term])), :class => "right"
+  
+    -#{@search.results.size} result#{@search.results.size.eql?(1) ? '' : 's'} match#{@search.results.size.eql?(1) ? 'es' : ''} your search.  Search again or
+    =# link_to "add '#{@term}' as a memory", new_memory_path(:name => URI.escape(@search.params[:term]))
+  - else
+    There are no memories that match your search.  Search again or submit this as a new memory.
+    = link_to image_tag("submitNewMemoryFromResults.png"), new_memory_path(:name => URI.escape(@search.params[:term])), :class => "right"
+
+
+  -#quite
+    We're not recalling this one. 
+    #{link_to 'Add it as a memory', new_memory_path(:name => URI.escape(@search.params[:term]))}
+    so others can reminisce.       
+
+- if @search.results.size > 0   
+  .content_box
+    .memories_list
+      = render :partial => 'memories/preview_small', :collection => @search.results, :as => :m
+      .spacer
+    = paginate @search.results

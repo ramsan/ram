@@ -1,0 +1,31 @@
+= form_for @vote do |f|
+  -if @vote.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@vote.errors.count, "error")} prohibited this vote from being saved:"
+      %ul
+        - @vote.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :showdown_id
+    = f.number_field :showdown_id
+  .field
+    = f.label :user_id
+    = f.number_field :user_id
+  .field
+    = f.label :memory_1
+    = f.check_box :memory_1
+  .field
+    = f.label :memory_2
+    = f.check_box :memory_2
+  .field
+    = f.label :memory_3
+    = f.check_box :memory_3
+  .field
+    = f.label :memory_4
+    = f.check_box :memory_4
+  .field
+    = f.label :memory_5
+    = f.check_box :memory_5
+  .actions
+    = f.submit 'Save'

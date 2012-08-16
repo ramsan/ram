@@ -1,0 +1,8 @@
+- content_for :head do
+  = javascript_include_tag "livefeed"
+
+#lifeFeedback
+  %h2 New Memory Live Feed
+  .space
+  #memoriesFeed
+    = render :partial => "shared/livefeed_memory", :collection =>@feeds, :as => :feed 

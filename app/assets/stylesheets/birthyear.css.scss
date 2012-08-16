@@ -1,0 +1,108 @@
+@font-face {
+    font-family: 'HelveticaLTStdBoldCondensed';
+    src: url('helveticaltstd-boldcond-webfont.eot');
+    src: url('helveticaltstd-boldcond-webfont.eot?#iefix') format('embedded-opentype'),
+         url('helveticaltstd-boldcond-webfont.woff') format('woff'),
+         url('helveticaltstd-boldcond-webfont.ttf') format('truetype'),
+         url('helveticaltstd-boldcond-webfont.svg#HelveticaLTStdBoldCondensed') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+	font-family: 'HelveticaLTStdBoldCondensed', Arial;
+}
+body {
+	#container {
+		display:table;
+		width:800px;
+		height:585px;
+		margin:5% auto 5% auto;
+		background: image-url("birthyear_background.jpg");
+		background-repeat:no-repeat;
+//		-moz-box-shadow: 2px 2px 14px #000000;
+//		-webkit-box-shadow: 2px 2px 14px #000000;
+//		box-shadow: 2px 2px 14px #000000;
+		#birthYearForm {
+			width:507px;
+			height:247px;
+			margin:134px auto 0px auto;
+			border: 6px #797979 solid;
+			-webkit-border-radius: 15px;
+			border-radius: 15px;
+			background: #f1fafb; /* Old browsers */
+			/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+			background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2YxZmFmYiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNjOGU0ZTciIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+			background: -moz-linear-gradient(top, #f1fafb 0%, #c8e4e7 100%); /* FF3.6+ */
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f1fafb), color-stop(100%,#c8e4e7)); /* Chrome,Safari4+ */
+			background: -webkit-linear-gradient(top, #f1fafb 0%,#c8e4e7 100%); /* Chrome10+,Safari5.1+ */
+			background: -o-linear-gradient(top, #f1fafb 0%,#c8e4e7 100%); /* Opera 11.10+ */
+			background: -ms-linear-gradient(top, #f1fafb 0%,#c8e4e7 100%); /* IE10+ */
+			background: linear-gradient(top, #f1fafb 0%,#c8e4e7 100%); /* W3C */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f1fafb', endColorstr='#c8e4e7',GradientType=0 ); /* IE6-8 */
+//			birthYearBigBG
+			h1 {
+				margin-top:25px;
+				font-size:18px;
+				text-align:center;
+				color: #333;
+				line-height:20px;
+				a {
+					font-size:18px;
+					color: #333;
+				}
+			}
+			.birthyearForm {
+				width:100%;
+				text-align:center;
+				font-size:12px;
+				padding:0px;
+				margin:0px auto;
+				form#birthYear {
+					label, input[type="number"], input[type="text"] {
+						margin-top:5px;
+						font-size:76px;
+						font-weight:900;
+						color: #666;
+						margin-right:-5px;
+					}
+					input[type="number"], input[type="text"] {
+						width:57px;
+						height:98px;
+						background:transparent image-url('birthYearBigBG.png') left top no-repeat;
+						border: none;
+						text-align:center;
+					}
+					input[type="submit"] {
+						display:block;
+						width:60px;
+						margin:3px auto;
+						border: 0px;
+						background-color:transparent;
+						font-size:18px;
+						font-weight:900;
+						color:#333;
+					}
+					input::-webkit-outer-spin-button,
+					input::-webkit-inner-spin-button {
+					    /* display: none; <- Crashes Chrome on hover */
+					    -webkit-appearance: none;
+					    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+					}
+					input::-webkit-input-placeholder, input:-moz-placeholder {
+					   font-size: 22px;
+						font-weight:500;
+					}
+				}
+				#skipBirthYear {
+					float:right;
+					padding-right:18px;
+					margin-top:-10px;
+					font-size:12px;
+					color: #333;
+					text-decoration:none;
+				}
+			}
+		}
+  }
+}

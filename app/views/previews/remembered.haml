@@ -1,0 +1,15 @@
+.preview_remembered{:id => "preview_remembered_#{@memory.id}"}
+  - if @memory.remembered_by.count > 0
+    .remembered_cont
+      %p.rememberedExplanation
+        Below are members who also remember this.  Click on a photo to see a profile and that person's memories.  
+      .spacer
+      %hr
+      = render :partial => 'remembered', :collection => @memory.remembered_by.order('created_at desc').limit(42), :as => :user
+      .spacer
+    .spacer
+    = link_to "View all users (#{@memory.remembered_by.count})", memory_path(@memory, :anchor => 'remembered_by'), :class => "view_all"
+  - else
+    .no_tab_content
+      No one yet remembers this memory
+      

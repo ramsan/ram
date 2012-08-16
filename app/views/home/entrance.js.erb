@@ -1,0 +1,9 @@
+<% if @selected_category == nil %>
+	$('li.span').removeClass('span');
+	$("#ALL").addClass('span');
+	$('#latestMemories').html("<%= escape_javascript(render :partial => 'latest_memories') %>");
+<% else %>
+	$('li.span').removeClass('span');
+	$("#<%= @selected_category.id %>").addClass('span');
+	$('#latestMemories').html("<%= escape_javascript(render :partial => 'latest_memories') %>");
+<% end %>

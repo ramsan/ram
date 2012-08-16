@@ -1,0 +1,5 @@
+%a{:href => !@memory.user.eql?(current_user) ? also_remembers_memory_path(@memory) : '#', :title => 'Click to remember this memory', 'data-remote' => true}
+  -# %img{:src => "#{asset_path 'remembers_profile_grey.png'}", :border => 0}
+  %img{:src => "#{asset_path 'remembers_small_grey.png'}", :border => 0}
+%span
+  = @memory.remembered_by.count

@@ -1,0 +1,10 @@
+#footer
+  #memoryBankBox.minimized
+    #memoryBankToggle{:class => "#{'hidden' if user_signed_in? != true}"}
+      = image_tag "memoryBankButtonClose.png", :title => "My Memory Bank", :id => "memoryBankToggleStatusImage"
+    #scrollToTop.hidden
+      = image_tag "scrollToTopButton.png", :title => "Scroll to top"
+    #memoryBankNavigationOptions
+      = link_to "MEMORIES", "#", :class => "memoryBankOptions first"
+    #memoryBankSliderWrapper
+      = render "shared/memory_bank_slider"

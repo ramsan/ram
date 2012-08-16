@@ -1,0 +1,17 @@
+- if @showbirthyearmemories == true && @birth_year_memories.length >= 1
+  :javascript
+    Shadowbox.init({
+        // let's skip the automatic setup because we don't have any
+        // properly configured link elements on the page
+        skipSetup: true
+    });
+    window.onload = function() {
+        // open a welcome message as soon as the window loads
+        Shadowbox.open({
+            content:    "#{escape_javascript(render :partial => "home/birthyear")}",
+            player:     "html",
+            title:      "",
+            height:     386,
+            width:      802
+        });
+    };

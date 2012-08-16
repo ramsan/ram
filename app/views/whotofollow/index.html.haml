@@ -1,0 +1,54 @@
+#wrapper_content
+  #main_content
+    .memory
+      .cont
+        .content_box.long
+          %h2{:style => "text-align:center; font-size:26px;"} Who To Follow
+          %table.list{:cellpadding => "5", :cellspacings => "4", :colspan => "0", :width => "100%"}
+            %tr.line_bottom
+              %td{:colspan => "2", :valign => "middle"}
+                #search_memories
+                  = form_tag whotofollow_index_path do
+                    = text_field_tag 'search', '', :placeholder => 'SEARCH who to follow', :maxlength => 60, :spellcheck => true
+                    =# image_tag("searchMemoryButton.png"), :title => "title", :class => "class"
+                    = image_submit_tag "searchMemoryButton.png", :id => 'search_btn'
+              %td.line_left_right{:valign => "middle", :width => "90"}
+                %label Age
+              %td{:colspan => "3", :valign => "middle", :width => "90"}
+                %label Posts
+            -if @users.count > 0
+              -@users.each do |eachusers|
+                %tr
+                  %td{:valign => "middle", :width => "100"}
+                    %a{:href => users_profile_path(eachusers)}
+                      = image_tag eachusers.my_profile_image, :size => '50x50'
+                  %td{:valign => "middle", :width => "160"}
+                    %a{:href => users_profile_path(eachusers)}
+                      = eachusers.name
+                  %td.line_left_right{:valign => "middle", :width => "90"}
+                    %label
+                      // this breaks if your age is not in the system -- User should have an age method
+                      //= Date.today.year - eachusers.birth_year
+                  %td{:valign => "middle", :width => "90"}
+                    %label
+                      = eachusers.public_memories.count
+                      -#= Memory.count_memoryby_userid(eachusers.id)
+                  %td{:valign => "middle", :width => "300"}
+                    -@memories = Memory.scoped.has_images.where('user_id = ?', eachusers.id).all(:limit => "3")
+                    = render :partial => "memories/post_preview_whotofollow", :collection => @memories, :as => :m
+                  %td{:valign => "middle"}
+                    - whotofollow = current_user.followees.where('followee_id <> ?', eachusers.id)
+                    .profile_following
+                      .col1
+                        -if whotofollow.count>0
+                          %a{:href => users_unfollow_from_profile_path(eachusers), 'data-remote' => true, :class => "following_#{eachusers.id}"}
+                            .z.orange.small
+                              unfollow
+                        -else
+                          %a{:href => users_follow_from_profile_path(eachusers), 'data-remote' => true, :class => "not-following_#{eachusers.id}"}
+                            .btn.yellow.small
+                              follow
+            -else
+              %tr
+                %td{:colspan => "5", :valign => "middle", :width => "100%"}
+                  = 'There is no user exist!'

@@ -1,0 +1,27 @@
+%p#notice= notice
+
+%p
+  %b Showdown:
+  = @vote.showdown_id
+%p
+  %b User:
+  = @vote.user_id
+%p
+  %b Memory 1:
+  = @vote.memory_1
+%p
+  %b Memory 2:
+  = @vote.memory_2
+%p
+  %b Memory 3:
+  = @vote.memory_3
+%p
+  %b Memory 4:
+  = @vote.memory_4
+%p
+  %b Memory 5:
+  = @vote.memory_5
+
+= link_to 'Edit', edit_vote_path(@vote)
+\|
+= link_to 'Back', votes_path

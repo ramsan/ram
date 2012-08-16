@@ -1,0 +1,18 @@
+#category_selector
+  - if @categories
+    %a#category_header{:href => '#'}
+      -if @category
+        = @category.name.titleize
+      -else
+        Select a category...
+    #category_box
+      - @categories.each do |c|
+        -if c.memories.any?
+          -if params[:category] && (params[:category].to_i == c.id)
+            =link_to dyr_categories_title(c.name), '#', :class => 'current', :id => "category_#{c.id}"
+          -else
+            =link_to dyr_categories_title(c.name), root_path(:category => c.id, :decade => params[:decade]), :id => "category_#{c.id}"
+      - if !params[:category]
+        =link_to 'All Categories', '#', :class => 'current'
+      - else
+        =link_to "All Categories", root_path(:decade => params[:decade])

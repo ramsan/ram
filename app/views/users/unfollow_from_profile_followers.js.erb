@@ -1,0 +1,13 @@
+var nodes = $('.following_<%= @followee.id%>');
+
+if(window.location.pathname == '/users/home'){
+	// nodes.parents('.profile_following').remove()	
+}
+
+var inner_divs = nodes.find('.btn.orange.small');
+inner_divs.text('follow');
+inner_divs.removeClass('orange');
+inner_divs.addClass('yellow');
+nodes.addClass('not-following_<%= @followee.id%>');
+nodes.removeClass('following_<%= @followee.id%>');
+nodes.attr('href', '<%= users_follow_from_profile_followers_path(@followee) %>');

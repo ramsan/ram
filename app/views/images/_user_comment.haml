@@ -1,0 +1,33 @@
+.commentsList.clearfix
+  .imageComment
+    - if user_comment.has_image?
+      %a.media{:href => "#{user_comment.this_url(:large)}"}
+        %img{:src => user_comment.this_url(:small), :title => 'View larger', :alt => 'View larger'}
+    - else
+      &nbsp;
+
+  -#.userCommentDetails
+    / .userData
+    /   .img_profile_memory_cont
+    /     .img_profile_memory
+    /       = image_tag  user_comment.user.my_profile_image
+    /   .data_profile_user_memory2
+    /     .userName
+    /       -if @memory.is_anonymous
+    /         Anonymous
+    /       - else
+    /         = link_to  user_comment.user.name, users_profile_path(user_comment.user)
+  .userCommented
+    -#.user_img
+      .img_profile_memory
+        = link_to  image_tag(user_comment.user.my_profile_image), users_profile_path(user_comment.user)
+    - unless user_comment.caption.blank?
+      .userCommentedOut
+        = "<a href='#{users_profile_path(user_comment.user)}'>#{user_comment.user.name}</a> ".html_safe + "said: " + user_comment.caption
+        &nbsp;
+        = "Posted: " + user_comment.created_at.to_formatted_s(:long_custom)
+        -#.delete_position
+          - if current_user
+            -if current_user.id = user_comment.user_id
+              %a{:href => images_path( :id => user_comment.id, :memory_id => user_comment.memory_id), 'data-remote' => true}
+                Delete

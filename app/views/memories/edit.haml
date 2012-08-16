@@ -1,0 +1,12 @@
+.newMemory
+  :javascript
+    $(document).ready(function(){    
+      $("#memoryDescription").autoGrow();
+      window.onbeforeunload = function() {
+          return 'You have not saved your changes. If you leave all your changes are going to be lost. Are you sure do you want to leave the page now?';
+      };
+    });
+  = render 'form'
+%br
+%br
+&nbsp;

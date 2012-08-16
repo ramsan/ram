@@ -1,0 +1,23 @@
+<% if !@list.nil? %>
+  var nodes = $('a.not-following_<%= @followee.id -%>');
+  nodes.attr('title', 'Following this user. Click to unfollow.');
+  nodes.addClass('following_<%= @followee.id%>');
+  nodes.removeClass('not-following_<%= @followee.id%>');
+  nodes.each(function(index) {
+  		$(this).attr('href', "<%= url_for(unfollow_preview_path(@followee, :list => true)) %>");
+  		$(this).text("Unfollow").effect("highlight", {}, 3000);
+  });
+<% else %>
+  var nodes = $('.not-following_<%= @followee.id -%>');
+  nodes.attr('title', 'Following this user. Click to unfollow.');
+  nodes.removeClass('grey');
+  nodes.addClass('green');
+  nodes.addClass('following_<%= @followee.id%>');
+  nodes.removeClass('not-following_<%= @followee.id%>');
+  nodes.each(function(index) {
+  		$('.usersFollowing').text(<%= @followee.followers.size %> + " Followers");
+  });
+  // nodes.each(function (i) {
+  //    $('.usersFollowing').closest().text(<%= @followee.followers.size %>);
+  // });
+<% end %>

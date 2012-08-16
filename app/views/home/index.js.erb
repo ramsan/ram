@@ -1,0 +1,3 @@
+// $('.memories_list').children('.spacer').append("<div class='endless<%= params[:page]%>'><%= escape_javascript(render(:partial => "memories/preview", :collection => @memories, :as => :m)) %></div>");
+
+$('#memories_list').html('<%= escape_javascript(render("shared/memories_list")) %>');

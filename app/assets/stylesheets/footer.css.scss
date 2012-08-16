@@ -1,0 +1,159 @@
+#wrapper_footer{
+  #footer {
+    #memoryBankSliderContainer {
+      width:980px;
+      height:71px;
+      margin:0px auto;
+      overflow:hidden;
+      #memoryBankInfo {
+        width:920px;
+        margin:10px auto 0 auto;
+        text-align:center;
+        h5 {
+          color:#999;
+          font-size: 24px;
+          font-weight:900;
+        }
+        .extraInfo {
+          color:#999;
+          font-size: 18px;
+          font-weight:900;
+          &a {
+            font-size: 18px;
+            font-weight:900;
+            color:#999;
+            text-decoration:underline;
+          }
+        }
+      }
+      .memoryBankSliderSection {
+        display:inline !important;
+        width: 910px;
+      /* Prevent FOUC (see FAQ page) and keep things readable if javascript is disabled */
+        overflow:hidden;
+        list-style: none;
+        margin: 0 auto;
+        padding:0;
+        margin-left: 10px;
+        .memoryBankSlider {
+          float:left;
+          display:inline-block;
+          vertical-align:top;
+          width:70px;
+          height:71px;
+          margin-right:10px;
+          .lastSliderRow {
+            margin-right:0px;
+            padding-right:0px;
+          }
+          .image {
+            width:68px;
+            height:69px;
+            border: 1px #666 solid;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            text-align:center;
+            overflow:hidden;
+            a img {
+              display:block;
+              width:95px;
+              height:95px;
+              &.memoryOnMyBank {
+                //display:none;
+              }
+            }
+          }
+          .caption-bottom {
+            display:none;
+          }
+        }
+      }
+      .arrow {
+        top: 0;
+        width:20px;
+        height:71px;
+        &.back {
+          background-image: image-url("goBackArrow.png");
+          left:-35px;
+        }
+        &.forward {
+          background-image: image-url("goForwardArrow.png");
+          right:-35px;
+        }
+      }
+    }
+    #memoryBankToggle {
+      position:absolute;
+      width:125px;
+      height:18px;
+      left:50%;
+      margin-left:-62px;
+      top:-18px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    #scrollToTop {
+      position:absolute;
+      width:94px;
+      height:18px;
+      right: 0;
+      margin-right:4px;
+      top:-18px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    #memoryBankBox {
+      position:fixed;
+      bottom: 0;
+      width:100%;
+      height:98px;
+      border: 1px #cccccc solid;
+      z-index:9999999999;
+      background-color:#f6f6f6;
+      background-image: image-url("memoryBankBoxBG.png");
+      background-repeat:repeat;
+      #memoryBankNavigationOptions {
+        width:980px;
+        height:14px;
+        background-color:#000000;
+        margin: 4px auto 5px auto;
+        border:none 0px #000000;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+        border-radius: 4px;
+        a.memoryBankOptions {
+          display:inline-block;
+          text-decoration:none;
+          color: #fff;
+          font-weight:900;
+          background-color:#666;
+          padding:0 8px;
+          border-left: 2px #fff solid;
+          border-right: 2px #fff solid;
+          &.first {
+            margin-left:20px;
+          }
+        }
+      }
+      &.minimized {
+        bottom: -98px;
+        background-color:#FFF;
+      }
+      #memoryBankSliderWrapper {
+        width:980px;
+        height:71px;
+        margin: 0 auto 4px auto;
+        overflow:hidden;
+      }
+      &.ui-state-active {
+        outline-style:dashed;
+        outline-width:5px;
+        outline-color: #FFFF0C;
+        outline-offset: 5px;
+      }
+    }
+  }
+}

@@ -1,0 +1,594 @@
+article, aside, details, figcaption, figure, footer, header, hgroup, nav, section {
+  display: block;
+}
+audio, canvas, video {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+}
+audio:not([controls]) {
+  display: none;
+}
+[hidden] {
+  display: none;
+}
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+/* line 10, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+html, button, input, select, textarea {
+  font-family: sans-serif;
+  color: #222;
+}
+
+/* line 11, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+body {
+  margin: 0;
+  font-size: 1em;
+  line-height: 1.4;
+}
+
+/* line 13, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+::-moz-selection {
+  background: #ffff00;
+  color: #000;
+  text-shadow: none;
+}
+
+/* line 14, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+::selection {
+  background: #ffff00;
+  color: #000;
+  text-shadow: none;
+}
+
+/* line 16, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+a {
+  color: #00e;
+}
+
+/* line 17, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+a:visited {
+  color: #551a8b;
+}
+
+/* line 18, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+a:hover {
+  color: #06e;
+}
+
+/* line 19, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+a:focus {
+  outline: thin dotted;
+}
+
+/* line 20, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+a:hover, a:active {
+  outline: 0;
+}
+
+/* line 21, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+abbr[title] {
+  border-bottom: 1px dotted;
+}
+
+/* line 22, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+b, strong {
+  font-weight: bold;
+}
+
+/* line 23, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+blockquote {
+  margin: 1em 40px;
+}
+
+/* line 24, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+dfn {
+  font-style: italic;
+}
+
+/* line 25, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
+}
+
+/* line 26, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+ins {
+  background: #ff9;
+  color: #000;
+  text-decoration: none;
+}
+
+/* line 27, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+mark {
+  background: #ff0;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+
+/* line 28, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+pre, code, kbd, samp {
+  font-family: monospace, serif;
+  _font-family: 'courier new', monospace;
+  font-size: 1em;
+}
+
+/* line 29, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+pre {
+  white-space: pre;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* line 31, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+q {
+  quotes: none;
+}
+
+/* line 32, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+q:before, q:after {
+  content: "";
+  content: none;
+}
+
+/* line 33, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+small {
+  font-size: 85%;
+}
+
+/* line 34, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+sub, sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+/* line 35, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+sup {
+  top: -0.5em;
+}
+
+/* line 36, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+sub {
+  bottom: -0.25em;
+}
+
+/* line 38, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+ul, ol {
+  margin: 1em 0;
+  padding: 0 0 0 40px;
+}
+
+/* line 39, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+dd {
+  margin: 0 0 0 40px;
+}
+
+/* line 40, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+nav ul, nav ol {
+  list-style: none;
+  list-style-image: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 42, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+img {
+  border: 0;
+  -ms-interpolation-mode: bicubic;
+  vertical-align: middle;
+}
+
+/* line 43, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+svg:not(:root) {
+  overflow: hidden;
+}
+
+/* line 44, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+figure {
+  margin: 0;
+}
+
+/* line 46, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+form {
+  margin: 0;
+}
+
+/* line 47, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 49, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+label {
+  cursor: pointer;
+}
+
+/* line 50, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+legend {
+  border: 0;
+  *margin-left: -7px;
+  padding: 0;
+  white-space: normal;
+}
+
+/* line 51, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+button, input, select, textarea {
+  font-size: 100%;
+  margin: 0;
+  vertical-align: baseline;
+  *vertical-align: middle;
+}
+
+/* line 52, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+button, input {
+  line-height: normal;
+}
+
+/* line 53, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+button, input[type="button"], input[type="reset"], input[type="submit"] {
+  cursor: pointer;
+  -webkit-appearance: button;
+  *overflow: visible;
+}
+
+/* line 54, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+button[disabled], input[disabled] {
+  cursor: default;
+}
+
+/* line 55, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+input[type="checkbox"], input[type="radio"] {
+  box-sizing: border-box;
+  padding: 0;
+  *width: 13px;
+  *height: 13px;
+}
+
+/* line 56, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+input[type="search"] {
+  -webkit-appearance: textfield;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+/* line 57, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+/* line 58, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+button::-moz-focus-inner, input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+/* line 59, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+textarea {
+  overflow: auto;
+  vertical-align: top;
+  resize: vertical;
+}
+
+/* line 61, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+input:invalid, textarea:invalid {
+  background-color: #f0dddd;
+}
+
+/* line 63, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 64, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+td {
+  vertical-align: top;
+}
+
+/* line 66, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+.chromeframe {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: black;
+  padding: 0.2em 0;
+}
+
+@font-face {
+  font-family: 'HelveticaLTStdBoldCondensed';
+  src: url("helveticaltstd-boldcond-webfont.eot");
+  src: url("helveticaltstd-boldcond-webfont.eot?#iefix") format("embedded-opentype"), url("helveticaltstd-boldcond-webfont.woff") format("woff"), url("helveticaltstd-boldcond-webfont.ttf") format("truetype"), url("helveticaltstd-boldcond-webfont.svg#HelveticaLTStdBoldCondensed") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* line 79, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+html {
+  height: 100%;
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+}
+/* line 84, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+html body {
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+/* line 88, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+html body #header_wrapper {
+  width: 100%;
+  background-color: #000;
+  height: 360px;
+}
+/* line 92, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+html body #header_wrapper header {
+  width: 960px;
+  margin: 0px auto;
+  margin-top: -20px;
+}
+/* line 96, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+html body #header_wrapper header hgroup#welcome-to-do-you-remember {
+  display: table;
+  position: relative;
+  margin: 20px auto 40px auto;
+  text-align: center;
+}
+/* line 101, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+html body #header_wrapper header hgroup#welcome-to-do-you-remember h1#title {
+  padding: 0px;
+  margin-top: 36px;
+  font-style: 36px;
+  color: #999;
+  font-weight: bold;
+  margin-bottom: 40px;
+}
+/* line 109, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+html body #header_wrapper header hgroup#welcome-to-do-you-remember h2#description {
+  font-weight: bold;
+  font-style: italic;
+  color: #999;
+  width: 370px;
+}
+/* line 116, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+html body #header_wrapper header #entrance {
+  width: 300px;
+  position: relative;
+  top: -350px;
+  left: 0px;
+}
+/* line 122, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+html body #header_wrapper header .do-you-remember-logo {
+  width: 300px;
+  position: relative;
+  top: -600px;
+  right: -660px;
+}
+/* line 128, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+html body #header_wrapper header .do-you-remember-logo a #elephant {
+  border: 0px solid;
+}
+/* line 134, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+html body .full {
+  background-color: #000;
+}
+/* line 137, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+html body #main {
+  background-color: #fff;
+}
+/* line 141, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+html body #invitation-instructions {
+  margin: 30px auto 20px auto;
+  width: 680px;
+}
+/* line 144, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+html body #invitation-instructions h3 {
+  font-size: 18px;
+  text-align: center;
+}
+/* line 149, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+html body #invitation-form {
+  margin: 20px auto 10px auto;
+  width: 680px;
+  text-align: center;
+}
+/* line 153, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+html body #invitation-form input[type=email] {
+  width: 330px;
+  -webkit-border-radius: 4px 4px 15px 15px;
+  border-radius: 4px 4px 15px 15px;
+  padding: 5px 10px;
+  font-size: 14px;
+}
+/* line 162, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+html body footer #social-networks {
+  width: 130px;
+  margin: 0px auto;
+}
+/* line 165, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+html body footer #social-networks .networks {
+  width: 32px;
+  height: 32px;
+  float: left;
+  margin-right: 10px;
+}
+/* line 172, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+html body footer #more-info {
+  clear: both;
+  margin: 30px auto 20px auto;
+  width: 680px;
+  text-align: center;
+}
+/* line 178, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+html body footer #more-info a {
+  font-size: 14px;
+  font-weight: 100;
+  color: #333;
+  text-decoration: none;
+}
+/* line 186, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+html body h1#splash {
+  position: relative;
+  top: 70px;
+  left: 45%;
+  font-size: 42px;
+  font-weight: 900;
+  color: #fff;
+}
+/* line 197, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+html .splashed {
+  background-color: #000;
+}
+/* line 200, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+html .alert, html .notice {
+  margin: 10px auto;
+  width: 60%;
+  padding: 20px;
+  border: 1px dashed red;
+  font-size: 18px;
+  color: red;
+  line-height: 24px;
+}
+/* line 209, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+html .notice {
+  border: 1px dashed green;
+  color: green;
+}
+
+/* line 220, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+.ir {
+  display: block;
+  border: 0;
+  text-indent: -999em;
+  overflow: hidden;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  text-align: left;
+  direction: ltr;
+  *line-height: 0;
+}
+
+/* line 221, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+.ir br {
+  display: none;
+}
+
+/* line 222, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+.hidden {
+  display: none !important;
+  visibility: hidden;
+}
+
+/* line 223, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+/* line 224, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+.visuallyhidden.focusable:active, .visuallyhidden.focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto;
+}
+
+/* line 225, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+.invisible {
+  visibility: hidden;
+}
+
+/* line 226, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+.clearfix:before, .clearfix:after {
+  content: "";
+  display: table;
+}
+
+/* line 227, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+.clearfix:after {
+  clear: both;
+}
+
+/* line 228, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+.clearfix {
+  *zoom: 1;
+}
+
+@media print {
+  /* line 231, /Users/ariel/Documents/rails_apps/dyr/app/assets/stylesheets/splash.css.scss */
+  * {
+    background: transparent !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    filter: none !important;
+    -ms-filter: none !important;
+  }
+
+  a, a:visited {
+    text-decoration: underline;
+  }
+
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+
+  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after {
+    content: "";
+  }
+
+  pre, blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  tr, img {
+    page-break-inside: avoid;
+  }
+
+  img {
+    max-width: 100% !important;
+  }
+
+  @page {
+    margin: 0.5cm;
+}
+
+  p, h2, h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h2, h3 {
+    page-break-after: avoid;
+  }
+}

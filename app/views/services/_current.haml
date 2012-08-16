@@ -1,0 +1,24 @@
+#currservices
+  %h3
+    The following #{current_user.services.count == 1 ? 'account is' : 'accounts are'} connected with your local account at #{CONFIG[:app_name]}:
+  - current_user.services.each do |service|
+    - next if service.provider.eql?('facebook')
+    .services_used
+      = image_tag "#{service.provider}_64.png", :alt => service.provider.titleize, :title => service.provider.titleize, :border => 0, :size => "64x64"
+      .user
+        .line1
+          Name: #{service.uname}
+        .line2
+          Email: #{service.uemail != '' ? service.uemail : 'not set'}
+        .line3
+          - current_user.services.count == 1 ? @msg = 'Removing the last account linked might lock you out of your account if you do not know the email/password sign-in of your local account!' : @msg = ''
+          = link_to "Remove this service", service, :confirm => 'Are you sure you want to remove this authentication service? ' + @msg, :method => :delete#, :class => "remove"
+      %br
+      %br
+- if current_user.services.count < Service::ENABLED.count       
+  #availableservices
+    %h3 You can connect more services to your account:
+    #services
+      = render :partial => 'devise/services_current'
+    -#%h4
+      If you signed-up for #{CONFIG[:app_name]} via an authentication service, a random password has been set for the local password. You can set a local password by updating your #{link_to 'profile', edit_user_registration_path}.

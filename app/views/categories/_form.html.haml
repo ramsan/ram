@@ -1,0 +1,19 @@
+= form_for @category, :html => {:multipart => true} do |f|
+  -if @category.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@category.errors.count, "error")} prohibited this showdown from being saved:"
+      %ul
+        - @category.errors.full_messages.each do |msg|
+          %li= msg
+  
+  .field        
+    = f.label :header_image
+    = f.file_field :header
+  
+  .field
+    = f.label :name
+    = f.text_field :name
+  
+  
+  .field
+    = f.submit 

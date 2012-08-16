@@ -1,0 +1,7 @@
+$('body').removeClass('busy');
+<% if @memory.destroyed? %>
+$('.memory_<%= @memory.id %>').remove();
+$('.remove[data-memory-id="<%= @memory.id %>"]').css('cursor','pointer');
+<% else %>
+alert('<%= t('fail', :action => 'deleting', :obj => 'Memory') %>');
+<% end %>

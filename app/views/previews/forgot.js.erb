@@ -1,0 +1,21 @@
+var memory_box = $(".memory_<%=@memory.id%>");
+
+if(window.location.pathname == '/users/home'){
+	memory_box.remove();	
+}
+
+// Change also remember icon & text
+// memory_box.find('.remember_big_btn img').attr('src', '<%= asset_path 'remembers_big_grey.png' %>');
+memory_box.find('.remember_big_btn img').attr('src', '<%= asset_path 'remembers_small_grey.png' %>');
+
+memory_box.find('.remember_big_btn span').text('Remember');
+memory_box.find('.remember_big_btn').attr('href', '<%= also_remembers_preview_path(@memory.id) %>');
+
+// Updated remembered count
+// memory_box.find('ul.icons_bar li.remembers span .t').text('<%= @memory.remembered_by.count %>');
+// memory_box.find('.iRememberThis').text('<%= pluralize(@memory.remembered_by.count, "Remember") %>');
+memory_box.find('.memoryRemembersCounter').text('<%= @memory.remembered_by.count %>');
+
+
+// refresh tab
+memory_box.find(".tabs").tabs("load", 2);

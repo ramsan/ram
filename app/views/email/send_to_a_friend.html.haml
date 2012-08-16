@@ -1,0 +1,15 @@
+Dear #{@params[:friend_name]},
+%br
+%br
+Do you remember the following memory?
+%br
+%br
+= link_to @memory.name, memory_url(@memory)
+%br
+%br
+I thought you would get a kick out of that!
+%br
+%br
+Regards,
+%br
+= @params[:sender_name]

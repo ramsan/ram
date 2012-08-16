@@ -1,0 +1,30 @@
+var memory_box = $(".memory_<%=@memory.id%>");
+memory_box.find(".iRememberedThisMemory").remove();
+memory_box.find(".greyBackGround").remove();
+
+// Change also remember icon & text
+// memory_box.find('.remember_big_btn img').attr('src', '<%= asset_path 'remembers_big_normal.png' %>');
+memory_box.find('.remember_big_btn img').attr('src', '<%= asset_path 'remembers_small_mini.png' %>');
+
+memory_box.find('.remember_big_btn span').text('Remembered');
+memory_box.find('.remember_big_btn').attr('href', '<%= forgot_preview_path(@memory.id) %>');
+
+// Updated remembered count
+memory_box.find('.memoryRemembersCounter').text('<%= @memory.remembered_by.count %>');
+
+// refresh tab
+memory_box.find(".tabs").tabs("load", 2);
+<% if @memory.remembered_by.count == 1 %>
+	<% @message = "You're the first to remember this..." %>
+<% elsif @memory.remembered_by.count == 2 %>	
+	<% @message = "1 other person remembers this..." %>
+<% elsif @memory.remembered_by.count >= 3 %>	
+	<% @message = "#{@memory.remembered_by.count - 1} other people remember this..." %>
+<% end %>	
+
+memory_box.find(".img").hide();
+memory_box.find('a.memory_link').append("<div class='iRememberedThisMemory'><span>Remembered!</span><div class='info'><%= @message %></div><div class='info'><a href='<%=memory_path(@memory)%>'>Add a comment</a></div></div>");
+
+memory_box.find(".iRememberedThisMemory").delay(5600).fadeOut('slow');
+
+memory_box.find(".img").delay(6500).fadeIn('fast');

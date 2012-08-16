@@ -1,0 +1,10 @@
+.preview_photos{:id => "preview_photos_#{@memory.id}"}
+  - if @memory.additional_images.count > 0
+    .photos_cont
+      = render :partial => 'photo', :collection => @memory.additional_images[0..19]
+      .spacer
+    .spacer
+    = link_to "View all photos (#{@memory.user_images.count})", memory_path(@memory, :anchor => 'images'), :class => "view_all"
+  - else
+    .no_tab_content
+      No additional photos
